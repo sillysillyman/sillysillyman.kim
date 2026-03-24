@@ -6,6 +6,7 @@ import { getTagInfo, getSeriesInfo } from '@/lib/constants';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import TableOfContents from '@/components/TableOfContents';
 import Footer from '@/components/Footer';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export const revalidate = 60;
 
@@ -105,7 +106,7 @@ export default async function PostPage({ params }: PostPageProps) {
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950">
       {/* 헤더 */}
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-950/95 border-b border-zinc-200 dark:border-zinc-800 backdrop-blur-xl">
-        <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center">
+        <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-70 transition-opacity">
             <span className="text-[15px] font-extrabold text-blue-700 dark:text-blue-400 font-mono">
               &lt;/&gt;
@@ -114,6 +115,7 @@ export default async function PostPage({ params }: PostPageProps) {
               sillysillyman
             </span>
           </Link>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -147,7 +149,7 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
 
           {/* 메타 정보 */}
-          <div className="flex items-center gap-2 flex-wrap text-[13px] text-zinc-400 dark:text-zinc-600 pb-9 border-b border-zinc-200 dark:border-zinc-800">
+          <div className="flex items-center gap-2 flex-wrap text-[13px] text-zinc-400 dark:text-zinc-600 pb-6 border-b border-zinc-200 dark:border-zinc-800">
             <span className="text-zinc-500 dark:text-zinc-400 font-medium">sillysillyman</span>
             <span className="opacity-30">·</span>
             <time dateTime={post.publishedAt}>{formattedDate}</time>
@@ -158,7 +160,7 @@ export default async function PostPage({ params }: PostPageProps) {
       </div>
 
       {/* 본문 + TOC */}
-      <div className="max-w-[1100px] mx-auto px-6 py-10 w-full flex gap-14 items-start">
+      <div className="max-w-[1100px] mx-auto px-6 py-6 w-full flex gap-14 items-start">
         {/* 본문 */}
         <main className="flex-1 min-w-0 max-w-[720px]">
           <article className="max-w-none">

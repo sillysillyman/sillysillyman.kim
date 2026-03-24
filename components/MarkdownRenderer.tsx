@@ -156,7 +156,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         // 인용구
         blockquote: ({ children, ...props }) => (
           <blockquote
-            className="border-l-3 border-blue-700 pl-4 py-2 my-6 bg-blue-50 dark:bg-blue-950/20 rounded-r-lg pr-4 text-zinc-700 dark:text-zinc-300"
+            className="border-l-4 border-blue-700 dark:border-blue-400 pl-4 py-2 my-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-r-lg pr-4 text-zinc-700 dark:text-zinc-300"
             {...props}
           >
             {children}
