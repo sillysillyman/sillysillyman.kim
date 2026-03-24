@@ -103,21 +103,21 @@ export default function Sidebar({
         </p>
         <div className="flex gap-2 mt-3">
           <a
-            href="https://github.com"
+            href="https://github.com/sillysillyman"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold px-2.5 py-1 rounded-md bg-blue-700/10 hover:bg-blue-700/20 transition-colors"
           >
             GitHub
           </a>
-          <a
+          {/* <a
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold px-2.5 py-1 rounded-md bg-blue-700/10 hover:bg-blue-700/20 transition-colors"
           >
             LinkedIn
-          </a>
+          </a> */}
         </div>
       </div>
 
