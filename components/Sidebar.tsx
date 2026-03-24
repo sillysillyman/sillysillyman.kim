@@ -88,9 +88,9 @@ export default function Sidebar({
       {/* 프로필 카드 */}
       <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-2 mb-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center text-sm text-white font-extrabold font-mono">
-            S
-          </div>
+          <span className="text-[16px] font-extrabold text-blue-700 dark:text-blue-400 font-mono">
+            &lt;/&gt;
+          </span>
           <div>
             <div className="text-[13px] font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
               sillysillyman

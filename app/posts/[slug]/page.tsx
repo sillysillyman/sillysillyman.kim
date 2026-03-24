@@ -107,9 +107,9 @@ export default async function PostPage({ params }: PostPageProps) {
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-950/95 border-b border-zinc-200 dark:border-zinc-800 backdrop-blur-xl">
         <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-70 transition-opacity">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center text-[13px] font-extrabold text-white font-mono">
-              S
-            </div>
+            <span className="text-[15px] font-extrabold text-blue-700 dark:text-blue-400 font-mono">
+              &lt;/&gt;
+            </span>
             <span className="text-[15px] font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
               sillysillyman
             </span>

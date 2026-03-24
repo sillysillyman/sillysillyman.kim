@@ -41,9 +41,9 @@ export default function Header({ onSearch, searchQuery }: HeaderProps) {
           }}
           className="flex items-center gap-2.5 cursor-pointer"
         >
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center text-[13px] font-extrabold text-white font-mono">
-            S
-          </div>
+          <span className="text-[15px] font-extrabold text-blue-700 dark:text-blue-400 font-mono">
+            &lt;/&gt;
+          </span>
           <span className="text-[15px] font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
             sillysillyman
           </span>
