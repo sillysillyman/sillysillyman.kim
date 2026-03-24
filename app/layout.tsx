@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     title: 'sillysillyman.kim',
     description: '백엔드 · 인프라 · 알고리즘 — 삽질과 해결의 기록',
   },
+  verification: {
+    google: 'mui2IqJrOIG56hgmu2TzMXJsuf7J7ASfMVs-mjivtYk',
+  },
   robots: {
     index: true,
     follow: true,
