@@ -22,13 +22,13 @@ const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
 // Notion 속성 값 추출 헬퍼 함수들
 function getTitle(property: any): string {
-  if (!property) return '';
-  return property.title?.[0]?.plain_text || '';
+  if (!property || !property.title) return '';
+  return property.title.map((t: any) => t.plain_text).join('');
 }
 
 function getRichText(property: any): string {
-  if (!property) return '';
-  return property.rich_text?.[0]?.plain_text || '';
+  if (!property || !property.rich_text) return '';
+  return property.rich_text.map((t: any) => t.plain_text).join('');
 }
 
 function getSelect(property: any): string {
