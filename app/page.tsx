@@ -25,7 +25,7 @@ export default function Home() {
       try {
         const response = await fetch('/api/posts');
         const data = await response.json();
-        setPosts(data);
+        setPosts(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Failed to fetch posts:', error);
       } finally {
@@ -185,14 +185,13 @@ export default function Home() {
       )}
 
       {/* 메인 콘텐츠: 포스트 그리드 + 사이드바 */}
-      <div className="max-w-[1100px] mx-auto px-6 py-5 flex gap-7 items-start flex-1">
+      <div className="max-w-[1100px] mx-auto px-6 py-5 flex-1 w-full" style={{ display: 'flex', gap: '28px', alignItems: 'flex-start' }}>
         {/* 포스트 그리드 */}
-        <main className="flex-1 min-w-0">
+        <main style={{ flex: '1 1 0%', minWidth: 0 }}>
           {visiblePosts.length === 0 ? (
-            <div className="text-center py-16 animate-in fade-in duration-300">
-              <div className="text-4xl mb-2.5 opacity-50">🔍</div>
-              <div className="text-sm text-zinc-600 dark:text-zinc-400">
-                {searchQuery ? '검색 결과가 없습니다' : '글이 없습니다'}
+            <div className="py-20 animate-in fade-in duration-300">
+              <div className="text-sm text-zinc-400 dark:text-zinc-600">
+                {searchQuery ? '검색 결과가 없습니다' : '아직 작성된 글이 없습니다'}
               </div>
             </div>
           ) : (
