@@ -1,0 +1,51 @@
+main {
+  --color-canvas-default: #ffffff;
+  --color-canvas-subtle: #f8f8fa;
+  --color-border-default: #e4e4e7;
+  --color-border-muted: #e4e4e7;
+  --color-neutral-muted: #f4f4f5;
+  --color-accent-fg: #1d4ed8;
+  --color-accent-emphasis: #1d4ed8;
+  --color-fg-default: #18181b;
+  --color-fg-muted: #71717a;
+  --color-fg-subtle: #a1a1aa;
+  --color-btn-bg: #f4f4f5;
+  --color-btn-border: #e4e4e7;
+  --color-btn-hover-bg: #e4e4e7;
+  --color-btn-primary-bg: #1d4ed8;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-hover-bg: #1e40af;
+}
+
+main .gsc-comment-box,
+main .gsc-comment-box textarea {
+  border-radius: 12px;
+  border-color: #e4e4e7;
+}
+
+main .gsc-comment-box .gsc-header {
+  padding-bottom: 0.5rem;
+}
+
+main .gsc-comment {
+  border-radius: 12px;
+  border-color: #e4e4e7;
+}
+
+main .gsc-timeline {
+  border-color: #e4e4e7;
+}
+
+main .gsc-reactions-button,
+main .gsc-reply-button,
+main .btn-primary {
+  border-radius: 10px;
+}
+
+main .gsc-comment-box-tabs {
+  border-radius: 12px 12px 0 0;
+}
+
+main .gsc-comment-box-bottom {
+  border-radius: 0 0 12px 12px;
+}

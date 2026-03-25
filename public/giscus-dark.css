@@ -1,0 +1,51 @@
+main {
+  --color-canvas-default: #18181b;
+  --color-canvas-subtle: #09090b;
+  --color-border-default: #27272a;
+  --color-border-muted: #27272a;
+  --color-neutral-muted: #27272a;
+  --color-accent-fg: #60a5fa;
+  --color-accent-emphasis: #1d4ed8;
+  --color-fg-default: #fafafa;
+  --color-fg-muted: #a1a1aa;
+  --color-fg-subtle: #71717a;
+  --color-btn-bg: #27272a;
+  --color-btn-border: #3f3f46;
+  --color-btn-hover-bg: #3f3f46;
+  --color-btn-primary-bg: #1d4ed8;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-hover-bg: #2563eb;
+}
+
+main .gsc-comment-box,
+main .gsc-comment-box textarea {
+  border-radius: 12px;
+  border-color: #27272a;
+}
+
+main .gsc-comment-box .gsc-header {
+  padding-bottom: 0.5rem;
+}
+
+main .gsc-comment {
+  border-radius: 12px;
+  border-color: #27272a;
+}
+
+main .gsc-timeline {
+  border-color: #27272a;
+}
+
+main .gsc-reactions-button,
+main .gsc-reply-button,
+main .btn-primary {
+  border-radius: 10px;
+}
+
+main .gsc-comment-box-tabs {
+  border-radius: 12px 12px 0 0;
+}
+
+main .gsc-comment-box-bottom {
+  border-radius: 0 0 12px 12px;
+}

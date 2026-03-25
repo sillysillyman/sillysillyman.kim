@@ -7,6 +7,7 @@ import MarkdownRenderer from '@/components/MarkdownRenderer';
 import TableOfContents from '@/components/TableOfContents';
 import Footer from '@/components/Footer';
 import ThemeToggle from '@/components/ThemeToggle';
+import Giscus from '@/components/Giscus';
 
 export const revalidate = 60;
 
@@ -166,6 +167,9 @@ export default async function PostPage({ params }: PostPageProps) {
           <article className="max-w-none">
             <MarkdownRenderer content={content} />
           </article>
+
+          {/* 댓글 */}
+          <Giscus />
 
           {/* 하단 구분선 */}
           <hr className="border-zinc-200 dark:border-zinc-800 mt-16 mb-8" />
