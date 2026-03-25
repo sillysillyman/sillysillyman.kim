@@ -138,8 +138,6 @@ export default function PostCard({ post, index }: PostCardProps) {
             <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">sillysillyman</span>
             <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 dark:text-zinc-600">
               <span>{formattedDate}</span>
-              <span className="opacity-35">·</span>
-              <span>{post.readTime || 5}분</span>
             </div>
           </div>
         </div>
