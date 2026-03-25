@@ -185,9 +185,9 @@ export default function Home() {
       )}
 
       {/* 메인 콘텐츠: 포스트 그리드 + 사이드바 */}
-      <div className="max-w-[1100px] mx-auto px-6 py-5 flex-1 w-full" style={{ display: 'flex', gap: '28px', alignItems: 'flex-start' }}>
+      <div className="max-w-[1100px] mx-auto px-6 py-5 flex-1 w-full lg:flex lg:gap-7 lg:items-start">
         {/* 포스트 그리드 */}
-        <main style={{ flex: '1 1 0%', minWidth: 0 }}>
+        <main className="flex-1 min-w-0">
           {visiblePosts.length === 0 ? (
             <div className="py-20 animate-in fade-in duration-300">
               <div className="text-sm text-zinc-400 dark:text-zinc-600">

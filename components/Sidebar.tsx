@@ -37,7 +37,7 @@ export default function Sidebar({
   );
 
   return (
-    <aside className="w-[220px] flex-shrink-0 sticky top-[76px] flex flex-col gap-5">
+    <aside className="hidden lg:flex w-[220px] flex-shrink-0 sticky top-[76px] flex-col gap-5">
       {/* 시리즈 목록 */}
       <div>
         <div className="text-[11.5px] font-bold text-zinc-500 dark:text-zinc-600 uppercase tracking-wider mb-2.5">
