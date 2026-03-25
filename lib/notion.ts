@@ -18,6 +18,36 @@ console.log('Notion client initialized:', {
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
+// 볼드/이탤릭 + 코드 조합 시 HTML 태그로 출력 (마크다운 파서 호환성 문제 해결)
+n2m.annotatePlainText = (text: string, annotations: any) => {
+  if (text.match(/^\s*$/)) return text;
+
+  const leadingSpace = text.match(/^(\s*)/)?.[0] || '';
+  const trailingSpace = text.match(/(\s*)$/)?.[0] || '';
+  text = text.trim();
+
+  if (!text) return leadingSpace + trailingSpace;
+
+  // 코드 + 볼드/이탤릭 조합: HTML 태그 사용
+  if (annotations.code && (annotations.bold || annotations.italic)) {
+    let result = `<code>${text}</code>`;
+    if (annotations.bold) result = `<strong>${result}</strong>`;
+    if (annotations.italic) result = `<em>${result}</em>`;
+    if (annotations.strikethrough) result = `<del>${result}</del>`;
+    if (annotations.underline) result = `<u>${result}</u>`;
+    return leadingSpace + result + trailingSpace;
+  }
+
+  // 일반 처리
+  if (annotations.code) text = `\`${text}\``;
+  if (annotations.bold) text = `**${text}**`;
+  if (annotations.italic) text = `_${text}_`;
+  if (annotations.strikethrough) text = `~~${text}~~`;
+  if (annotations.underline) text = `<u>${text}</u>`;
+
+  return leadingSpace + text + trailingSpace;
+};
+
 const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
 // Notion 속성 값 추출 헬퍼 함수들

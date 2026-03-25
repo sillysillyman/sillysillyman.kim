@@ -123,8 +123,9 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             let text = String(children).replace(/`/g, '');
             return (
               <code
-                className="bg-zinc-100 dark:bg-zinc-800 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded-md text-[0.9em] font-mono"
                 {...props}
+                className="bg-zinc-100 dark:bg-zinc-800 text-blue-700 dark:text-blue-400 px-1.5 py-0.5 rounded-md text-[0.9em] font-mono"
+                style={{ fontWeight: 'inherit', fontStyle: 'inherit' }}
               >
                 {text}
               </code>
