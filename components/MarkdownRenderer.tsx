@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import mermaid from 'mermaid';
 import 'highlight.js/styles/github-dark.css';
 
 interface MarkdownRendererProps {
@@ -17,6 +18,32 @@ function extractText(node: any): string {
   if (Array.isArray(node)) return node.map(extractText).join('');
   if (node?.props?.children) return extractText(node.props.children);
   return '';
+}
+
+// Mermaid 다이어그램 컴포넌트
+function MermaidBlock({ code }: { code: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [svg, setSvg] = useState<string>('');
+
+  useEffect(() => {
+    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+    const id = `mermaid-${Math.random().toString(36).slice(2, 9)}`;
+    mermaid.render(id, code).then(({ svg }) => {
+      setSvg(svg);
+    }).catch(() => {
+      if (containerRef.current) {
+        containerRef.current.textContent = code;
+      }
+    });
+  }, [code]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="my-7 flex justify-center overflow-x-auto"
+      dangerouslySetInnerHTML={svg ? { __html: svg } : undefined}
+    />
+  );
 }
 
 // 코드 블록 컴포넌트
@@ -117,6 +144,12 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         code: ({ inline, children, className, ...props }: any) => {
           // 인라인 코드 판단: inline이 true이거나 className이 없으면 인라인
           const isInline = inline || !className;
+
+          // Mermaid 다이어그램
+          if (className?.includes('language-mermaid')) {
+            const code = String(children).replace(/\n$/, '');
+            return <MermaidBlock code={code} />;
+          }
 
           if (isInline) {
             // 모든 백틱 제거
