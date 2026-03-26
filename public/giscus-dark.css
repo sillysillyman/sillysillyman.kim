@@ -17,9 +17,13 @@ main {
   --color-btn-primary-hover-bg: #2563eb;
 }
 
-main .gsc-comment-box,
-main .gsc-comment-box textarea {
+main .gsc-comment-box {
   border-radius: 12px !important;
+  border-color: #27272a;
+}
+
+main .gsc-comment-box textarea {
+  border-radius: 12px 12px 0 0 !important;
   border-color: #27272a;
 }
 
@@ -52,4 +56,12 @@ main .gsc-comment-box-bottom {
 
 main .gsc-comment-box-write {
   border-radius: 12px !important;
+}
+
+main .gsc-comment-box-tabs .rounded-t {
+  border-radius: 12px 12px 0 0 !important;
+}
+
+main .gsc-comment-box-textarea-extras {
+  border-radius: 0 0 12px 12px !important;
 }
