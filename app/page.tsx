@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import PostCard from '@/components/PostCard';
 import Sidebar from '@/components/Sidebar';
@@ -13,6 +13,7 @@ import { getSeriesInfo } from '@/lib/constants';
 // 서버 컴포넌트에서 데이터를 가져오는 대신, 클라이언트에서 fetch
 export default function Home() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -81,6 +82,7 @@ export default function Home() {
     setActiveTag(tag);
     setActiveSeries(null);
     setSearchQuery('');
+    router.replace(tag === '전체' ? '/' : `/?tag=${tag}`, { scroll: false });
   };
 
   // 시리즈 선택 핸들러
