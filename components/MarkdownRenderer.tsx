@@ -4,8 +4,11 @@ import { useState, useEffect, useRef, useId } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
+import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import mermaid from 'mermaid';
+import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github-dark.css';
 
 interface MarkdownRendererProps {
@@ -136,8 +139,8 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw, rehypeHighlight]}
+      remarkPlugins={[remarkGfm, remarkMath]}
+      rehypePlugins={[rehypeRaw, rehypeKatex, rehypeHighlight]}
       components={{
         // 코드 블록
         pre: ({ children }) => <>{children}</>,
