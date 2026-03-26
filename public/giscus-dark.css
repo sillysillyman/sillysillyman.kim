@@ -39,7 +39,7 @@ main .gsc-timeline {
 main .gsc-reactions-button,
 main .gsc-reply-button,
 main .btn-primary {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 main .gsc-comment-box-tabs {
@@ -48,4 +48,8 @@ main .gsc-comment-box-tabs {
 
 main .gsc-comment-box-bottom {
   border-radius: 0 0 12px 12px;
+}
+
+main .gsc-comment-box-write {
+  border-radius: 12px;
 }

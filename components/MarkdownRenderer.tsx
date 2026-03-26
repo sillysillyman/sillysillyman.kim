@@ -203,7 +203,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         ),
         // 테이블
         table: ({ children, ...props }) => (
-          <div className="overflow-x-auto my-6 rounded-[10px] border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="overflow-x-auto my-6 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
             <table className="w-full border-collapse text-[13.5px]" {...props}>
               {children}
             </table>
