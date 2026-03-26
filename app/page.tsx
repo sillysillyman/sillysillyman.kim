@@ -129,10 +129,10 @@ function HomeContent() {
       {/* 히어로 섹션 */}
       <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-10 pb-2 animate-in fade-in duration-400">
         <h1 className="text-[28px] font-extrabold text-zinc-900 dark:text-zinc-50 leading-tight tracking-tighter mb-1.5">
-          개발하며 배운 것들 <span className="text-2xl">✍️</span>
+          sillysillyman.kim 엔지니어링 블로그
         </h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed tracking-tight">
-          백엔드 · 인프라 · 알고리즘 — 삽질과 해결의 기록
+          Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.
           <span className="text-zinc-400 dark:text-zinc-600 ml-3 text-[12.5px]">
             총 {posts.length}편
           </span>
