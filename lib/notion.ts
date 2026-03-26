@@ -74,7 +74,11 @@ function getTitle(property: any): string {
 
 function getRichText(property: any): string {
   if (!property || !property.rich_text) return '';
-  return property.rich_text.map((t: any) => t.plain_text).join('');
+  return property.rich_text.map((t: any) => {
+    // Notion equation 블록은 $로 감싸서 LaTeX 렌더링 가능하게 함
+    if (t.type === 'equation') return `$${t.plain_text}$`;
+    return t.plain_text;
+  }).join('');
 }
 
 function getSelect(property: any): string {
