@@ -30,7 +30,13 @@ function extractHeadings(content: string) {
       .replace(/\*\*([^*]+)\*\*/g, '$1')  // 볼드
       .replace(/\*([^*]+)\*/g, '$1')      // 이탤릭
       .trim();
-    const id = text
+    const id = match[2]
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\$\$[^$]+\$\$/g, '')
+      .replace(/\$([^$]+)\$/g, '$1')
+      .replace(/\*\*([^*]+)\*\*/g, '$1')
+      .replace(/\*([^*]+)\*/g, '$1')
+      .trim()
       .replace(/\s+/g, '-')
       .replace(/[^\w가-힣-]/g, '')
       .toLowerCase();

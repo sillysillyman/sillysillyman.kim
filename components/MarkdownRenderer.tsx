@@ -19,6 +19,8 @@ interface MarkdownRendererProps {
 function extractText(node: any): string {
   if (typeof node === 'string') return node;
   if (Array.isArray(node)) return node.map(extractText).join('');
+  // KaTeX mathml은 건너뛰어 텍스트 중복 방지
+  if (node?.props?.className?.includes?.('katex-mathml')) return '';
   if (node?.props?.children) return extractText(node.props.children);
   return '';
 }
