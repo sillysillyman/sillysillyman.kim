@@ -127,7 +127,7 @@ function HomeContent() {
       <Header onSearch={setSearchQuery} searchQuery={searchQuery} />
 
       {/* 히어로 섹션 */}
-      <section className="max-w-[1100px] mx-auto px-6 pt-10 pb-2 animate-in fade-in duration-400">
+      <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-10 pb-2 animate-in fade-in duration-400">
         <h1 className="text-[28px] font-extrabold text-zinc-900 dark:text-zinc-50 leading-tight tracking-tighter mb-1.5">
           개발하며 배운 것들 <span className="text-2xl">✍️</span>
         </h1>
@@ -141,7 +141,7 @@ function HomeContent() {
 
       {/* 검색 결과 정보 */}
       {searchQuery.trim() && (
-        <section className="max-w-[1100px] mx-auto px-6 pt-3 animate-in fade-in duration-150">
+        <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-3 animate-in fade-in duration-150">
           <div className="text-[12.5px] text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5">
             <svg
               width="13"
@@ -165,7 +165,7 @@ function HomeContent() {
 
       {/* 활성 시리즈 배너 */}
       {seriesInfo && (
-        <section className="max-w-[1100px] mx-auto px-6 pt-3 animate-in fade-in duration-200">
+        <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-3 animate-in fade-in duration-200">
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-zinc-900 border-2 text-[13px]"
             style={{ borderColor: `${seriesInfo.emoji === '🐝' ? '#F59E0B' : '#1D4ED8'}33` }}
@@ -196,7 +196,7 @@ function HomeContent() {
       )}
 
       {/* 메인 콘텐츠: 포스트 그리드 + 사이드바 */}
-      <div className="max-w-[1100px] mx-auto px-6 py-5 flex-1 w-full lg:flex lg:gap-7 lg:items-start">
+      <div className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 py-5 flex-1 w-full lg:flex lg:gap-7 lg:items-start">
         {/* 포스트 그리드 */}
         <main className="flex-1 min-w-0">
           {visiblePosts.length === 0 ? (
@@ -207,7 +207,7 @@ function HomeContent() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[18px]">
                 {visiblePosts.map((post, index) => (
                   <PostCard key={post.id} post={post} index={index} />
                 ))}
