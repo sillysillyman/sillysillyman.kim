@@ -17,8 +17,8 @@ export const TAG_MAP: Record<string, TagInfo> = {
   development: {
     id: 'development',
     label: '개발',
-    emoji: '💻',
-    color: { from: '#3b82f6', to: '#2563eb' },
+    emoji: '⚙️',
+    color: { from: '#71717a', to: '#52525b' },
   },
   infrastructure: {
     id: 'infrastructure',
@@ -30,13 +30,7 @@ export const TAG_MAP: Record<string, TagInfo> = {
     id: 'algorithm',
     label: '알고리즘',
     emoji: '♾️',
-    color: { from: '#10b981', to: '#059669' },
-  },
-  devops: {
-    id: 'devops',
-    label: 'DevOps',
-    emoji: '⚙️',
-    color: { from: '#f59e0b', to: '#d97706' },
+    color: { from: '#0ea5e9', to: '#0284c7' },
   },
   spring: {
     id: 'spring',
@@ -53,20 +47,8 @@ export const TAG_MAP: Record<string, TagInfo> = {
   database: {
     id: 'database',
     label: '데이터베이스',
-    emoji: '🗄️',
-    color: { from: '#0ea5e9', to: '#0284c7' },
-  },
-  collaboration: {
-    id: 'collaboration',
-    label: '프론트협업',
-    emoji: '🤝',
-    color: { from: '#ec4899', to: '#db2777' },
-  },
-  architecture: {
-    id: 'architecture',
-    label: '아키텍처',
-    emoji: '🏗️',
-    color: { from: '#a855f7', to: '#9333ea' },
+    emoji: '🛢️',
+    color: { from: '#b45309', to: '#92400e' },
   },
   performance: {
     id: 'performance',
