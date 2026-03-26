@@ -50,6 +50,22 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
 
 const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
+// 로컬 개발 환경에서는 Draft 글도 표시
+const isDev = process.env.NODE_ENV === 'development';
+
+// Status 필터: 개발 환경에서는 Draft + Published, 프로덕션에서는 Published만
+function getStatusFilter(): any {
+  if (isDev) {
+    return {
+      or: [
+        { property: 'Status', select: { equals: 'Published' } },
+        { property: 'Status', select: { equals: 'Draft' } },
+      ],
+    };
+  }
+  return { property: 'Status', select: { equals: 'Published' } };
+}
+
 // Notion 속성 값 추출 헬퍼 함수들
 function getTitle(property: any): string {
   if (!property || !property.title) return '';
@@ -115,12 +131,7 @@ function notionPageToPost(page: any): Post {
 export async function getAllPosts(): Promise<Post[]> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,
-    filter: {
-      property: 'Status',
-      select: {
-        equals: 'Published',
-      },
-    },
+    filter: getStatusFilter(),
     sorts: [
       {
         property: 'Pinned',
@@ -154,12 +165,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
             equals: slug,
           },
         },
-        {
-          property: 'Status',
-          select: {
-            equals: 'Published',
-          },
-        },
+        getStatusFilter(),
       ],
     },
   });
@@ -192,12 +198,7 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
             equals: tag,
           },
         },
-        {
-          property: 'Status',
-          select: {
-            equals: 'Published',
-          },
-        },
+        getStatusFilter(),
       ],
     },
     sorts: [
@@ -228,12 +229,7 @@ export async function getPostsBySeries(series: string): Promise<Post[]> {
             equals: series,
           },
         },
-        {
-          property: 'Status',
-          select: {
-            equals: 'Published',
-          },
-        },
+        getStatusFilter(),
       ],
     },
     sorts: [
