@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Post } from '@/lib/types';
 import { getTagInfo, getSeriesInfo } from '@/lib/constants';
+import InlineMath from '@/components/InlineMath';
 
 interface PostCardProps {
   post: Post;
@@ -130,7 +131,7 @@ export default function PostCard({ post, index }: PostCardProps) {
 
           {/* 설명 */}
           <p className="text-[12.5px] leading-relaxed text-zinc-600 dark:text-zinc-400 mb-3.5 line-clamp-2">
-            {post.description}
+            <InlineMath text={post.description} />
           </p>
 
           {/* 메타 정보 */}

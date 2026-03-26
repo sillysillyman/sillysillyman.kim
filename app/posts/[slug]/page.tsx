@@ -8,6 +8,7 @@ import TableOfContents from '@/components/TableOfContents';
 import Footer from '@/components/Footer';
 import ThemeToggle from '@/components/ThemeToggle';
 import Giscus from '@/components/Giscus';
+import InlineMath from '@/components/InlineMath';
 
 export const revalidate = 60;
 
@@ -23,17 +24,25 @@ function extractHeadings(content: string) {
 
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
+    // LaTeX 명령어를 읽기 좋은 텍스트로 변환
+    const cleanLatex = (s: string) =>
+      s.replace(/\\(log|ln|sin|cos|tan|sqrt|sum|prod|lim|max|min|gcd|lcm|mod|inf|sup)\b/g, '$1')
+        .replace(/\\(leq|geq|neq|approx|times|cdot|div)/g, (_, cmd) => {
+          const map: Record<string, string> = { leq: '≤', geq: '≥', neq: '≠', approx: '≈', times: '×', cdot: '·', div: '÷' };
+          return map[cmd] || cmd;
+        })
+        .replace(/[{}\\]/g, '');
     const text = match[2]
       .replace(/`([^`]+)`/g, '$1')        // 인라인 코드
       .replace(/\$\$[^$]+\$\$/g, '')      // 블록 수식
-      .replace(/\$([^$]+)\$/g, '$1')      // 인라인 수식
+      .replace(/\$([^$]+)\$/g, (_, m) => cleanLatex(m))  // 인라인 수식
       .replace(/\*\*([^*]+)\*\*/g, '$1')  // 볼드
       .replace(/\*([^*]+)\*/g, '$1')      // 이탤릭
       .trim();
     const id = match[2]
       .replace(/`([^`]+)`/g, '$1')
       .replace(/\$\$[^$]+\$\$/g, '')
-      .replace(/\$([^$]+)\$/g, '$1')
+      .replace(/\$([^$]+)\$/g, (_, m) => cleanLatex(m))
       .replace(/\*\*([^*]+)\*\*/g, '$1')
       .replace(/\*([^*]+)\*/g, '$1')
       .trim()
@@ -157,7 +166,7 @@ export default async function PostPage({ params }: PostPageProps) {
           {/* 설명 */}
           {post.description && (
             <p className="text-[15px] text-zinc-500 dark:text-zinc-400 leading-relaxed mb-5">
-              {post.description}
+              <InlineMath text={post.description} />
             </p>
           )}
 
