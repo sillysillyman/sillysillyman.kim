@@ -29,7 +29,7 @@ export const TAG_MAP: Record<string, TagInfo> = {
   algorithm: {
     id: 'algorithm',
     label: '알고리즘',
-    emoji: '🧮',
+    emoji: '♾️',
     color: { from: '#10b981', to: '#059669' },
   },
   devops: {
