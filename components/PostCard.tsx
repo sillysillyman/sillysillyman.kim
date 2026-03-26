@@ -111,7 +111,7 @@ export default function PostCard({ post, index }: PostCardProps) {
         </div>
 
         {/* 카드 내용 */}
-        <div className="p-4 pb-[18px]">
+        <div className="p-4 pb-[18px] flex flex-col h-[160px]">
           {/* 시리즈 정보 */}
           {seriesInfo && (
             <div
@@ -134,7 +134,7 @@ export default function PostCard({ post, index }: PostCardProps) {
           </p>
 
           {/* 메타 정보 */}
-          <div className="flex items-center justify-between pt-2.5 border-t border-zinc-100 dark:border-zinc-800">
+          <div className="flex items-center justify-between pt-2.5 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
             <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">sillysillyman</span>
             <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 dark:text-zinc-600">
               <span>{formattedDate}</span>
