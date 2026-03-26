@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import PostCard from '@/components/PostCard';
@@ -10,8 +10,15 @@ import InfiniteScroll from '@/components/InfiniteScroll';
 import { Post } from '@/lib/types';
 import { getSeriesInfo } from '@/lib/constants';
 
-// 서버 컴포넌트에서 데이터를 가져오는 대신, 클라이언트에서 fetch
 export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [posts, setPosts] = useState<Post[]>([]);
