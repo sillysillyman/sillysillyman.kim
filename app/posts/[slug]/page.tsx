@@ -23,7 +23,13 @@ function extractHeadings(content: string) {
 
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
-    const text = match[2].replace(/`([^`]+)`/g, '$1').trim();
+    const text = match[2]
+      .replace(/`([^`]+)`/g, '$1')        // 인라인 코드
+      .replace(/\$\$[^$]+\$\$/g, '')      // 블록 수식
+      .replace(/\$([^$]+)\$/g, '$1')      // 인라인 수식
+      .replace(/\*\*([^*]+)\*\*/g, '$1')  // 볼드
+      .replace(/\*([^*]+)\*/g, '$1')      // 이탤릭
+      .trim();
     const id = text
       .replace(/\s+/g, '-')
       .replace(/[^\w가-힣-]/g, '')
