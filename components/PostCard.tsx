@@ -99,7 +99,7 @@ export default function PostCard({ post, index }: PostCardProps) {
                   border: `1px solid ${tagInfo.color.from}33`,
                 }}
               >
-                {tagInfo.label}
+                {tagInfo.emoji} {tagInfo.label}
               </span>
             )}
             {post.pinned && (
