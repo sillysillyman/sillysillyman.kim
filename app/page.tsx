@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import PostCard from '@/components/PostCard';
 import Sidebar from '@/components/Sidebar';
@@ -11,10 +12,11 @@ import { getSeriesInfo } from '@/lib/constants';
 
 // 서버 컴포넌트에서 데이터를 가져오는 대신, 클라이언트에서 fetch
 export default function Home() {
+  const searchParams = useSearchParams();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTag, setActiveTag] = useState('전체');
+  const [activeTag, setActiveTag] = useState(searchParams.get('tag') || '전체');
   const [activeSeries, setActiveSeries] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
   const [loadingMore, setLoadingMore] = useState(false);
