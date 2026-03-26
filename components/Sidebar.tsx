@@ -162,7 +162,7 @@ export default function Sidebar({
                     : {}
                 }
               >
-                {tag.label} <span className="opacity-50">{count}</span>
+                {tag.emoji} {tag.label} <span className="opacity-50">{count}</span>
               </button>
             );
           })}
