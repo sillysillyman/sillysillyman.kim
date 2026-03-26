@@ -19,7 +19,7 @@ main {
 
 main .gsc-comment-box,
 main .gsc-comment-box textarea {
-  border-radius: 12px;
+  border-radius: 12px !important;
   border-color: #27272a;
 }
 
@@ -28,7 +28,7 @@ main .gsc-comment-box .gsc-header {
 }
 
 main .gsc-comment {
-  border-radius: 12px;
+  border-radius: 12px !important;
   border-color: #27272a;
 }
 
@@ -39,17 +39,17 @@ main .gsc-timeline {
 main .gsc-reactions-button,
 main .gsc-reply-button,
 main .btn-primary {
-  border-radius: 12px;
+  border-radius: 12px !important;
 }
 
 main .gsc-comment-box-tabs {
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px 12px 0 0 !important;
 }
 
 main .gsc-comment-box-bottom {
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 12px 12px !important;
 }
 
 main .gsc-comment-box-write {
-  border-radius: 12px;
+  border-radius: 12px !important;
 }
