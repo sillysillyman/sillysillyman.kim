@@ -40,8 +40,8 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
 
   // 일반 처리
   if (annotations.code) text = `\`${text}\``;
-  if (annotations.bold) text = `**${text}**`;
-  if (annotations.italic) text = `_${text}_`;
+  if (annotations.bold) text = `<strong>${text}</strong>`;
+  if (annotations.italic) text = `<em>${text}</em>`;
   if (annotations.strikethrough) text = `~~${text}~~`;
   if (annotations.underline) text = `<u>${text}</u>`;
 
