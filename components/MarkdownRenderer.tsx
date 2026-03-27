@@ -21,6 +21,8 @@ function extractText(node: any): string {
   if (Array.isArray(node)) return node.map(extractText).join('');
   // KaTeX mathml은 건너뛰어 텍스트 중복 방지
   if (node?.props?.className?.includes?.('katex-mathml')) return '';
+  // KaTeX 시각적 간격을 실제 공백으로 변환
+  if (node?.props?.className?.includes?.('mspace')) return ' ';
   if (node?.props?.children) return extractText(node.props.children);
   return '';
 }
