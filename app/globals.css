@@ -33,6 +33,12 @@
   }
 }
 
+/* KaTeX 블록 수식 모바일 가로 스크롤 방지 */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 @keyframes dotPulse {
   0%,
   100% {
