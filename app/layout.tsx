@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     default: 'sillysillyman.kim',
     template: '%s | sillysillyman.kim',
   },
-  description: '백엔드 · 인프라 · 알고리즘 — 삽질과 해결의 기록',
+  description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
   keywords: [
     '개발 블로그',
     'Backend',
@@ -29,12 +29,12 @@ export const metadata: Metadata = {
     url: 'https://sillysillyman.kim',
     siteName: 'sillysillyman.kim',
     title: 'sillysillyman.kim',
-    description: '백엔드 · 인프라 · 알고리즘 — 삽질과 해결의 기록',
+    description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'sillysillyman.kim',
-    description: '백엔드 · 인프라 · 알고리즘 — 삽질과 해결의 기록',
+    description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
   },
   verification: {
     google: 'mui2IqJrOIG56hgmu2TzMXJsuf7J7ASfMVs-mjivtYk',
