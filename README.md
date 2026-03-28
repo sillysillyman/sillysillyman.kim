@@ -1,11 +1,11 @@
-# Notion Blog Template
+# sillysillyman.kim
 
 [![GitHub stars](https://img.shields.io/github/stars/sillysillyman/sillysillyman.kim?style=social)](https://github.com/sillysillyman/sillysillyman.kim/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/sillysillyman/sillysillyman.kim?style=social)](https://github.com/sillysillyman/sillysillyman.kim/fork)
 
 [한국어](README.ko.md)
 
-A developer blog template powered by Notion as a headless CMS. Fork it, edit one config file, and deploy.
+Notion-powered developer blog. Fork it as a template — edit one config file and deploy.
 
 **Demo**: [sillysillyman.kim](https://sillysillyman.kim)
 

@@ -1,9 +1,9 @@
-# Notion 블로그 템플릿
+# sillysillyman.kim
 
 [![GitHub stars](https://img.shields.io/github/stars/sillysillyman/sillysillyman.kim?style=social)](https://github.com/sillysillyman/sillysillyman.kim/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/sillysillyman/sillysillyman.kim?style=social)](https://github.com/sillysillyman/sillysillyman.kim/fork)
 
-Notion을 헤드리스 CMS로 사용하는 개발 블로그 템플릿. Fork하고, config 파일 하나 수정하고, 배포하면 끝.
+Notion 기반 개발 블로그. Fork 후 config 파일 하나만 수정하면 바로 배포할 수 있습니다.
 
 **데모**: [sillysillyman.kim](https://sillysillyman.kim)
 
