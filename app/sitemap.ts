@@ -11,8 +11,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const postUrls = posts.map((post) => ({
     url: `${siteUrl}/posts/${post.slug}`,
     lastModified: new Date(post.publishedAt),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
   }));
 
   // 정적 페이지
@@ -20,8 +18,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: siteUrl,
       lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
     },
   ];
 
