@@ -198,6 +198,16 @@ npm run build    # 프로덕션 빌드
 npm run lint     # ESLint
 ```
 
+## 업데이트 반영
+
+원본 템플릿의 업데이트를 반영하려면:
+
+```bash
+git remote add upstream https://github.com/sillysillyman/sillysillyman.kim.git
+git fetch upstream
+git merge upstream/main
+```
+
 ## 라이선스
 
 [MIT](LICENSE)

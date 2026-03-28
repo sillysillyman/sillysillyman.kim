@@ -200,6 +200,16 @@ npm run build    # Production build
 npm run lint     # ESLint
 ```
 
+## Staying Up to Date
+
+To pull future updates from the original template:
+
+```bash
+git remote add upstream https://github.com/sillysillyman/sillysillyman.kim.git
+git fetch upstream
+git merge upstream/main
+```
+
 ## License
 
 [MIT](LICENSE)
