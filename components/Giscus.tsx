@@ -11,7 +11,7 @@ export default function Giscus() {
   useEffect(() => {
     if (!ref.current || !config.giscus.repo) return;
 
-    // 기존 iframe 제거 (테마 변경 시 재렌더링)
+    // Remove existing iframe (re-render on theme change)
     const existingIframe = ref.current.querySelector('iframe.giscus-frame');
     if (existingIframe) existingIframe.remove();
 

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getAllPosts } from '@/lib/notion';
 import { config } from '@/lib/config';
 
-export const revalidate = 3600; // 1시간마다 갱신
+export const revalidate = 3600; // Revalidate every hour
 
 export async function GET() {
   const siteUrl = config.url;

@@ -1,6 +1,6 @@
-// LaTeX 명령어 → 유니코드 기호 매핑
+// LaTeX command -> Unicode symbol mapping
 const SYMBOL_MAP: Record<string, string> = {
-  // 연산자·관계
+  // Operators and relations
   leq: '≤', geq: '≥', neq: '≠', approx: '≈', equiv: '≡',
   le: '≤', ge: '≥', ne: '≠',
   times: '×', cdot: '·', div: '÷', pm: '±', mp: '∓',
@@ -13,33 +13,33 @@ const SYMBOL_MAP: Record<string, string> = {
   wedge: '∧', vee: '∨', neg: '¬', land: '∧', lor: '∨', lnot: '¬',
   forall: '∀', exists: '∃', nexists: '∄',
   bot: '⊥', top: '⊤', vdash: '⊢', dashv: '⊣', models: '⊨',
-  // 화살표
+  // Arrows
   to: '→', rightarrow: '→', leftarrow: '←',
   leftrightarrow: '↔', Leftrightarrow: '⇔',
   Rightarrow: '⇒', Leftarrow: '⇐',
   mapsto: '↦', implies: '⇒', iff: '⇔',
   uparrow: '↑', downarrow: '↓', Uparrow: '⇑', Downarrow: '⇓',
   hookrightarrow: '↪', hookleftarrow: '↩',
-  // 그리스 소문자
+  // Greek lowercase
   alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε',
   varepsilon: 'ε', zeta: 'ζ', eta: 'η', theta: 'θ', vartheta: 'ϑ',
   iota: 'ι', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν',
   xi: 'ξ', pi: 'π', varpi: 'ϖ', rho: 'ρ', varrho: 'ϱ',
   sigma: 'σ', varsigma: 'ς', tau: 'τ', upsilon: 'υ',
   phi: 'φ', varphi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω',
-  // 그리스 대문자
+  // Greek uppercase
   Gamma: 'Γ', Delta: 'Δ', Theta: 'Θ', Lambda: 'Λ', Xi: 'Ξ',
   Pi: 'Π', Sigma: 'Σ', Upsilon: 'Υ', Phi: 'Φ', Psi: 'Ψ', Omega: 'Ω',
-  // 큰 연산자
+  // Large operators
   sum: 'Σ', prod: 'Π', coprod: '∐',
   bigcap: '⋂', bigcup: '⋃', bigvee: '⋁', bigwedge: '⋀',
   bigoplus: '⊕', bigotimes: '⊗',
   oplus: '⊕', otimes: '⊗', ominus: '⊖', odot: '⊙',
   int: '∫', iint: '∬', iiint: '∭', oint: '∮',
-  // 괄호·구분자
+  // Brackets and delimiters
   lfloor: '⌊', rfloor: '⌋', lceil: '⌈', rceil: '⌉',
   langle: '⟨', rangle: '⟩',
-  // 기타 기호
+  // Miscellaneous symbols
   infty: '∞', partial: '∂', nabla: '∇',
   ell: 'ℓ', hbar: 'ℏ', Re: 'ℜ', Im: 'ℑ', wp: '℘',
   aleph: 'ℵ', beth: 'ℶ',
@@ -50,35 +50,35 @@ const SYMBOL_MAP: Record<string, string> = {
 };
 
 /**
- * LaTeX 수식을 읽기 좋은 유니코드 평문으로 변환 (TOC 표시용)
+ * Convert LaTeX expressions to readable Unicode plaintext (for TOC display)
  */
 export function cleanLatex(s: string): string {
   return s
-    // 구조적 패턴
+    // Structural patterns
     .replace(/\\sqrt\{([^{}]+)\}/g, '√$1')
     .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '$1/$2')
     .replace(/\\binom\{([^{}]+)\}\{([^{}]+)\}/g, 'C($1,$2)')
-    // 크기 조절 제거
+    // Remove size modifiers
     .replace(/\\(left|right|big|Big|bigg|Bigg|middle)[|.()[\]{}\\]?/g, '')
-    // 내용만 추출하는 명령들
+    // Extract content from text/math commands
     .replace(/\\text\{([^{}]+)\}/g, '$1')
     .replace(/\\math(rm|bf|it|sf|tt|cal|bb|frak|scr)\{([^{}]+)\}/g, '$2')
     .replace(/\\operatorname\{([^{}]+)\}/g, '$1')
-    // 장식 명령 → 내용만
+    // Decoration commands -> content only
     .replace(/\\(overline|underline|hat|bar|vec|tilde|dot|ddot|widehat|widetilde|overbrace|underbrace|boxed|cancel)\{([^{}]+)\}/g, '$2')
-    // 함수명 → 백슬래시만 제거
+    // Function names -> strip backslash only
     .replace(/\\(log|ln|lg|sin|cos|tan|cot|sec|csc|arcsin|arccos|arctan|sinh|cosh|tanh|exp|det|dim|ker|deg|hom|arg|lim|limsup|liminf|max|min|gcd|lcm|mod|inf|sup|Pr)\b/g, '$1')
-    // 기호 매핑
+    // Symbol mapping
     .replace(/\\([a-zA-Z]+)/g, (_, cmd) => SYMBOL_MAP[cmd] || cmd)
-    // spacing → 공백
+    // Spacing -> whitespace
     .replace(/\\(quad|qquad)\b/g, ' ')
     .replace(/\\[,;!> ]/g, ' ')
-    // 아래첨자·위첨자 제거 (TOC 가독성)
+    // Remove subscripts and superscripts (for TOC readability)
     .replace(/[_^]\{[^{}]+\}/g, '')
     .replace(/[_^][a-zA-Z0-9]/g, '')
-    // 남은 중괄호·백슬래시 제거
+    // Remove remaining braces and backslashes
     .replace(/[{}\\]/g, '')
-    // 연속 공백 정리
+    // Collapse consecutive whitespace
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -90,7 +90,7 @@ export interface HeadingItem {
 }
 
 /**
- * 마크다운에서 heading 추출 (h1~h3)
+ * Extract headings (h1-h3) from markdown
  */
 export function extractHeadings(content: string): HeadingItem[] {
   const headingRegex = /^(#{1,3})\s+(.+)$/gm;

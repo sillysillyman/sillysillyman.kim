@@ -79,7 +79,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const seriesInfo = post.series ? getSeriesInfo(post.series) : null;
   const headings = extractHeadings(content);
 
-  // 날짜 포맷팅
+  // Date formatting
   const formattedDate = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString('ko-KR', {
         year: 'numeric',
@@ -90,7 +90,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950">
-      {/* 헤더 */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-950/95 border-b border-zinc-200 dark:border-zinc-800 backdrop-blur-xl">
         <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-70 transition-opacity">
@@ -105,10 +105,10 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
       </header>
 
-      {/* 글 헤더 */}
+      {/* Post header */}
       <div className="max-w-[1100px] mx-auto px-6 pt-12 w-full">
         <div className="max-w-[720px]">
-          {/* 태그 — 제목 위에 작게 */}
+          {/* Tag — small, above title */}
           {tagInfo && (
             <div className="mb-3">
               <Link
@@ -122,19 +122,19 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           )}
 
-          {/* 제목 */}
+          {/* Title */}
           <h1 className="text-[34px] font-extrabold text-zinc-900 dark:text-zinc-50 leading-[1.4] tracking-tight mb-4">
             {post.title}
           </h1>
 
-          {/* 설명 */}
+          {/* Description */}
           {post.description && (
             <p className="text-[15px] text-zinc-500 dark:text-zinc-400 leading-relaxed mb-5">
               <InlineMath text={post.description} />
             </p>
           )}
 
-          {/* 메타 정보 */}
+          {/* Meta info */}
           <div className="flex items-center gap-2 flex-wrap text-[13px] text-zinc-400 dark:text-zinc-600 pb-6 border-b border-zinc-200 dark:border-zinc-800">
             <span className="text-zinc-500 dark:text-zinc-400 font-medium">{config.author.name}</span>
             <span className="opacity-30">·</span>
@@ -145,21 +145,21 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
       </div>
 
-      {/* 본문 + TOC */}
+      {/* Content + TOC */}
       <div className="max-w-[1100px] mx-auto px-6 py-6 w-full flex gap-14 items-start">
-        {/* 본문 */}
+        {/* Article body */}
         <main className="flex-1 min-w-0 max-w-[720px]">
           <article className="max-w-none">
             <MarkdownRenderer content={content} headings={headings} />
           </article>
 
-          {/* 댓글 */}
+          {/* Comments */}
           <Giscus />
 
-          {/* 하단 구분선 */}
+          {/* Bottom divider */}
           <hr className="border-zinc-200 dark:border-zinc-800 mt-16 mb-8" />
 
-          {/* 목록으로 돌아가기 */}
+          {/* Back to list */}
           <div className="flex justify-center">
             <Link
               href="/"
@@ -181,7 +181,7 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
         </main>
 
-        {/* TOC 사이드바 — 데스크톱에서만 표시 */}
+        {/* TOC sidebar — desktop only */}
         {headings.filter(h => h.level >= 2).length > 0 && (
           <aside className="hidden lg:block w-[180px] shrink-0 sticky top-20">
             <TableOfContents items={headings.filter(h => h.level >= 2)} />

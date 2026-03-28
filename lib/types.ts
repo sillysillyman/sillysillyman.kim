@@ -1,4 +1,4 @@
-// Notion API에서 가져온 블로그 포스트 타입
+// Blog post type fetched from the Notion API
 export interface Post {
   id: string;
   title: string;
@@ -12,10 +12,10 @@ export interface Post {
   pinned: boolean;
   thumbnail?: string;
   canonicalUrl?: string;
-  readTime?: number; // 읽기 시간 (분)
+  readTime?: number; // reading time in minutes
 }
 
-// 태그 정보 타입
+// Tag info type
 export interface TagInfo {
   id: string;
   label: string;
@@ -26,7 +26,7 @@ export interface TagInfo {
   };
 }
 
-// 시리즈 정보 타입
+// Series info type
 export interface SeriesInfo {
   id: string;
   label: string;

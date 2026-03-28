@@ -30,7 +30,7 @@ function HomeContent() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  // 초기 데이터 로드
+  // Initial data fetch
   useEffect(() => {
     async function fetchPosts() {
       try {
@@ -46,15 +46,15 @@ function HomeContent() {
     fetchPosts();
   }, []);
 
-  // 필터링 로직
+  // Filtering logic
   const filteredPosts = posts.filter((post) => {
-    // 시리즈 필터
+    // Series filter
     if (activeSeries && post.series !== activeSeries) return false;
 
-    // 태그 필터
+    // Tag filter
     if (!activeSeries && activeTag !== '전체' && post.tag !== activeTag) return false;
 
-    // 검색 필터
+    // Search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       return (
@@ -70,7 +70,7 @@ function HomeContent() {
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredPosts.length;
 
-  // 무한 스크롤 로드 더보기
+  // Infinite scroll load more
   const loadMore = useCallback(() => {
     if (loadingMore || !hasMore) return;
     setLoadingMore(true);
@@ -80,12 +80,12 @@ function HomeContent() {
     }, 450);
   }, [loadingMore, hasMore]);
 
-  // 필터 변경 시 visibleCount 리셋
+  // Reset visibleCount on filter change
   useEffect(() => {
     setVisibleCount(6);
   }, [activeTag, activeSeries, searchQuery]);
 
-  // 태그 선택 핸들러
+  // Tag selection handler
   const handleTagSelect = (tag: string) => {
     setActiveTag(tag);
     setActiveSeries(null);
@@ -93,7 +93,7 @@ function HomeContent() {
     router.replace(tag === '전체' ? '/' : `/?tag=${tag}`, { scroll: false });
   };
 
-  // 시리즈 선택 핸들러
+  // Series selection handler
   const handleSeriesSelect = (seriesId: string) => {
     if (activeSeries === seriesId) {
       setActiveSeries(null);
@@ -127,7 +127,7 @@ function HomeContent() {
     <div className="min-h-screen flex flex-col">
       <Header onSearch={setSearchQuery} searchQuery={searchQuery} />
 
-      {/* 히어로 섹션 */}
+      {/* Hero section */}
       <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-10 pb-2 animate-in fade-in duration-400">
         <h1 className="text-[28px] font-extrabold text-zinc-900 dark:text-zinc-50 leading-tight tracking-tighter mb-1.5">
           {config.name} 엔지니어링 블로그
@@ -140,7 +140,7 @@ function HomeContent() {
         </p>
       </section>
 
-      {/* 검색 결과 정보 */}
+      {/* Search results info */}
       {searchQuery.trim() && (
         <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-3 animate-in fade-in duration-150">
           <div className="text-[12.5px] text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5">
@@ -164,7 +164,7 @@ function HomeContent() {
         </section>
       )}
 
-      {/* 활성 시리즈 배너 */}
+      {/* Active series banner */}
       {seriesInfo && (
         <section className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 pt-3 animate-in fade-in duration-200">
           <div
@@ -196,9 +196,9 @@ function HomeContent() {
         </section>
       )}
 
-      {/* 메인 콘텐츠: 포스트 그리드 + 사이드바 */}
+      {/* Main content: post grid + sidebar */}
       <div className="max-w-[1100px] 2xl:max-w-[1400px] mx-auto px-6 py-5 flex-1 w-full lg:flex lg:gap-7 lg:items-start">
-        {/* 포스트 그리드 */}
+        {/* Post grid */}
         <main className="flex-1 min-w-0">
           {visiblePosts.length === 0 ? (
             <div className="py-20 animate-in fade-in duration-300">
@@ -214,13 +214,13 @@ function HomeContent() {
                 ))}
               </div>
 
-              {/* 무한 스크롤 */}
+              {/* Infinite scroll */}
               <InfiniteScroll onLoadMore={loadMore} hasMore={hasMore} loading={loadingMore} />
             </>
           )}
         </main>
 
-        {/* 사이드바 */}
+        {/* Sidebar */}
         <Sidebar
           posts={posts}
           activeTag={activeTag}

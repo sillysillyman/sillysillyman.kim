@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAllPosts } from '@/lib/notion';
 
-export const revalidate = 60; // ISR: 60초마다 갱신
+export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export async function GET() {
   try {

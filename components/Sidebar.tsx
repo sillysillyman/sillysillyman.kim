@@ -19,7 +19,7 @@ export default function Sidebar({
   onTagSelect,
   onSeriesSelect,
 }: SidebarProps) {
-  // 태그별 글 개수 계산
+  // Count posts per tag
   const tagCounts = Object.keys(TAG_MAP).reduce(
     (acc, tagId) => {
       acc[tagId] = posts.filter((p) => p.tag === tagId).length;
@@ -28,7 +28,7 @@ export default function Sidebar({
     {} as Record<string, number>,
   );
 
-  // 시리즈별 글 개수 계산
+  // Count posts per series
   const seriesCounts = Object.keys(SERIES_MAP).reduce(
     (acc, seriesId) => {
       acc[seriesId] = posts.filter((p) => p.series === seriesId).length;
@@ -39,7 +39,7 @@ export default function Sidebar({
 
   return (
     <aside className="hidden lg:flex w-[220px] flex-shrink-0 sticky top-[76px] flex-col gap-5">
-      {/* 시리즈 목록 */}
+      {/* Series list */}
       <div>
         <div className="text-[11.5px] font-bold text-zinc-500 dark:text-zinc-600 uppercase tracking-wider mb-2.5">
           시리즈
@@ -86,7 +86,7 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* 프로필 카드 */}
+      {/* Profile card */}
       <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-2 mb-2.5">
           <span className="text-[16px] font-extrabold text-blue-700 dark:text-blue-400 font-mono">
@@ -116,7 +116,7 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* 태그 클라우드 */}
+      {/* Tag cloud */}
       <div>
         <div className="text-[11.5px] font-bold text-zinc-500 dark:text-zinc-600 uppercase tracking-wider mb-2.5">
           태그

@@ -1,6 +1,6 @@
 import { TagInfo, SeriesInfo } from './types';
 
-// 태그 맵핑 (Notion 영문 → 화면 한글 + 색상)
+// Tag mapping (Notion English key -> display label + color)
 export const TAG_MAP: Record<string, TagInfo> = {
   troubleshooting: {
     id: 'troubleshooting',
@@ -58,7 +58,7 @@ export const TAG_MAP: Record<string, TagInfo> = {
   },
 };
 
-// 시리즈 맵핑 (Notion 영문 → 화면 한글)
+// Series mapping (Notion English key -> display label)
 export const SERIES_MAP: Record<string, SeriesInfo> = {
   waggle: {
     id: 'waggle',
@@ -82,12 +82,12 @@ export const SERIES_MAP: Record<string, SeriesInfo> = {
   },
 };
 
-// 태그 정보 가져오기
+// Get tag info by ID
 export function getTagInfo(tagId: string): TagInfo | undefined {
   return TAG_MAP[tagId];
 }
 
-// 시리즈 정보 가져오기
+// Get series info by ID
 export function getSeriesInfo(seriesId: string): SeriesInfo | undefined {
   return SERIES_MAP[seriesId];
 }

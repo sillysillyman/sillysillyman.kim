@@ -7,9 +7,9 @@ interface InlineMathProps {
   text: string;
 }
 
-// $...$ 구문을 KaTeX로 렌더링하는 컴포넌트
+// Component that renders $...$ syntax with KaTeX
 export default function InlineMath({ text }: InlineMathProps) {
-  // $...$ 패턴을 찾아서 KaTeX HTML로 변환
+  // Split by $...$ patterns and convert to KaTeX HTML
   const parts = text.split(/(\$[^$]+\$)/g);
 
   return (

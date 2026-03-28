@@ -17,19 +17,19 @@ interface MarkdownRendererProps {
   headings?: HeadingItem[];
 }
 
-// React 노드에서 텍스트 추출 (복사 기능용)
+// Extract text from React nodes (for copy functionality)
 function extractText(node: any): string {
   if (typeof node === 'string') return node;
   if (Array.isArray(node)) return node.map(extractText).join('');
-  // KaTeX mathml은 건너뛰어 텍스트 중복 방지
+  // Skip KaTeX mathml to prevent duplicate text
   if (node?.props?.className?.includes?.('katex-mathml')) return '';
-  // KaTeX 시각적 간격을 실제 공백으로 변환
+  // Convert KaTeX visual spacing to actual whitespace
   if (node?.props?.className?.includes?.('mspace')) return ' ';
   if (node?.props?.children) return extractText(node.props.children);
   return '';
 }
 
-// Mermaid 다이어그램 컴포넌트
+// Mermaid diagram component
 function MermaidBlock({ code }: { code: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>('');
@@ -55,11 +55,11 @@ function MermaidBlock({ code }: { code: string }) {
   );
 }
 
-// 코드 블록 컴포넌트
+// Code block component
 function CodeBlock({ children, className }: { children: any; className?: string }) {
   const [copied, setCopied] = useState(false);
 
-  // className에서 언어 추출 (hljs language-sql → sql)
+  // Extract language from className (hljs language-sql -> sql)
   const language =
     className
       ?.replace(/^hljs\s+/, '')
@@ -67,7 +67,7 @@ function CodeBlock({ children, className }: { children: any; className?: string 
       ?.split(' ')[0]
       ?.toLowerCase() || 'text';
 
-  // 복사용 텍스트 추출
+  // Extract plain text for copying
   const plainText = extractText(children);
 
   const handleCopy = () => {
@@ -127,8 +127,8 @@ function CodeBlock({ children, className }: { children: any; className?: string 
   );
 }
 
-// rehype 플러그인: 마크다운 AST 단계에서 헤딩에 미리 계산된 ID 부여
-// AST 순회는 서버/클라이언트 동일하므로 hydration 불일치 없음
+// Rehype plugin: assign pre-computed IDs to headings in the markdown AST
+// AST traversal is identical on server/client, so no hydration mismatch
 function rehypeHeadingIds(headingItems: HeadingItem[]) {
   return () => (tree: any) => {
     let idx = 0;
@@ -149,7 +149,7 @@ function rehypeHeadingIds(headingItems: HeadingItem[]) {
 }
 
 export default function MarkdownRenderer({ content, headings }: MarkdownRendererProps) {
-  // HTML 엔티티 디코딩 (백틱 등)
+  // Decode HTML entities (backticks, etc.)
   let processedContent = content
     .replace(/&#96;/g, '`')
     .replace(/&lt;/g, '<')
@@ -158,7 +158,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
     .replace(/&#39;/g, "'")
     .replace(/&amp;/g, '&');
 
-  // summary 태그 안의 인라인 코드만 처리 (details는 건드리지 않음)
+  // Process inline code only inside summary tags (leave details untouched)
   processedContent = processedContent.replace(/<summary>(.*?)<\/summary>/g, (match, inner) => {
     const processed = inner.replace(/`([^`]+)`/g, '<code>$1</code>');
     return `<summary>${processed}</summary>`;
@@ -169,20 +169,20 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[rehypeRaw, ...(headings ? [rehypeHeadingIds(headings)] : []), rehypeKatex, rehypeHighlight]}
       components={{
-        // 코드 블록
+        // Code block
         pre: ({ children }) => <>{children}</>,
         code: ({ inline, children, className, ...props }: any) => {
-          // 인라인 코드 판단: inline이 true이거나 className이 없으면 인라인
+          // Determine inline code: inline is true or className is absent
           const isInline = inline || !className;
 
-          // Mermaid 다이어그램
+          // Mermaid diagram
           if (className?.includes('language-mermaid')) {
             const code = String(children).replace(/\n$/, '');
             return <MermaidBlock code={code} />;
           }
 
           if (isInline) {
-            // 모든 백틱 제거
+            // Remove all backticks
             let text = String(children).replace(/`/g, '');
             return (
               <code
@@ -196,7 +196,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
           }
           return <CodeBlock className={className}>{children}</CodeBlock>;
         },
-        // 링크
+        // Link
         a: ({ children, href, ...props }) => (
           <a
             href={href}
@@ -208,7 +208,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {children}
           </a>
         ),
-        // 이미지
+        // Image
         img: ({ src, alt, ...props }) => (
           <img
             src={src}
@@ -217,7 +217,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {...props}
           />
         ),
-        // 인용구
+        // Blockquote
         blockquote: ({ children, ...props }) => (
           <blockquote
             className="border-l-4 border-blue-700 dark:border-blue-400 pl-4 py-2 my-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-r-lg pr-4 text-zinc-700 dark:text-zinc-300"
@@ -226,7 +226,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {children}
           </blockquote>
         ),
-        // 테이블
+        // Table
         table: ({ children, ...props }) => (
           <div className="overflow-x-auto my-6 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
             <table className="w-full border-collapse text-[13.5px]" {...props}>
@@ -255,7 +255,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {children}
           </td>
         ),
-        // 제목
+        // Headings
         h1: ({ children, node, ...props }) => (
           <h1
             {...props}
@@ -280,7 +280,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {children}
           </h3>
         ),
-        // 리스트
+        // Lists
         ul: ({ children, ...props }) => (
           <ul className="list-disc list-outside ml-5 my-4 space-y-2" {...props}>
             {children}
@@ -296,7 +296,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {children}
           </li>
         ),
-        // 단락
+        // Paragraph
         p: ({ children, ...props }) => (
           <div
             className="my-4 leading-[1.9] text-[15.5px] text-zinc-700 dark:text-zinc-300"
@@ -305,17 +305,17 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
             {children}
           </div>
         ),
-        // 수평선
+        // Horizontal rule
         hr: ({ ...props }) => (
           <hr className="my-12 border-zinc-200 dark:border-zinc-800" {...props} />
         ),
-        // 강조
+        // Bold/strong
         strong: ({ children, ...props }) => (
           <strong className="font-semibold text-zinc-900 dark:text-zinc-100" {...props}>
             {children}
           </strong>
         ),
-        // 토글/접기 - Notion 스타일 (배경 없이 깔끔하게)
+        // Toggle/collapsible - Notion style (clean, no background)
         details: ({ children, ...props }) => (
           <details className="my-4" {...props}>
             {children}

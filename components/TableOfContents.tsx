@@ -58,7 +58,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        // 클릭으로 스크롤 중일 때는 Observer 업데이트 무시
+        // Ignore observer updates while click-scrolling
         if (isClickScrolling) return;
 
         entries.forEach((entry) => {
@@ -79,7 +79,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   }, [items, isClickScrolling]);
 
   const handleClick = (id: string) => {
-    // 클릭 즉시 해당 항목 하이라이팅
+    // Immediately highlight the clicked item
     setActiveId(id);
     setIsClickScrolling(true);
 
@@ -88,7 +88,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // 스크롤 애니메이션 완료 후 Observer 다시 활성화
+    // Re-enable observer after scroll animation completes
     setTimeout(() => {
       setIsClickScrolling(false);
     }, 1000);
@@ -120,7 +120,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
         })}
       </div>
 
-      {/* 공유 버튼 */}
+      {/* Share button */}
       <ShareButton />
     </nav>
   );

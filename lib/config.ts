@@ -1,13 +1,13 @@
-// 사이트 설정 — fork 후 이 파일만 수정하면 됩니다.
+// Site configuration — edit this file after forking.
 export const config = {
-  // 사이트 기본 정보
+  // Basic site info
   name: 'sillysillyman.kim',
   description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
-  url: process.env.SITE_URL!, // .env.local에 SITE_URL 필수
+  url: process.env.SITE_URL!, // SITE_URL required in .env.local
   locale: 'ko_KR',
   language: 'ko',
 
-  // SEO 키워드
+  // SEO keywords
   keywords: [
     '개발 블로그',
     'Backend',
@@ -20,7 +20,7 @@ export const config = {
     '인프라',
   ],
 
-  // 작성자 정보
+  // Author info
   author: {
     name: 'sillysillyman',
     title: 'Backend Developer',
@@ -30,7 +30,7 @@ export const config = {
     // linkedin: 'https://linkedin.com/in/yourname',
   },
 
-  // Giscus 댓글 설정 (https://giscus.app 에서 발급, 미설정 시 댓글 비활성화)
+  // Giscus comments (get keys from https://giscus.app, comments disabled if unset)
   giscus: {
     repo: process.env.NEXT_PUBLIC_GISCUS_REPO || '',
     repoId: process.env.NEXT_PUBLIC_GISCUS_REPO_ID || '',
@@ -38,7 +38,10 @@ export const config = {
     categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || '',
   },
 
-  // Google Search Console 인증 코드 (없으면 빈 문자열)
+  // Read time calculation (500 for CJK languages, 200~250 for English)
+  charsPerMinute: 500,
+
+  // Google Search Console verification code (empty string if none)
   verification: {
     google: 'mui2IqJrOIG56hgmu2TzMXJsuf7J7ASfMVs-mjivtYk',
   },

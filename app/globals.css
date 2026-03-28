@@ -33,7 +33,7 @@
   }
 }
 
-/* KaTeX 블록 수식 모바일 가로 스크롤 방지 */
+/* Prevent horizontal scroll for KaTeX block math on mobile */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;

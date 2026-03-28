@@ -1,13 +1,14 @@
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import { Post } from './types';
+import { config } from './config';
 
-// Notion 클라이언트 초기화
+// Initialize Notion client
 const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 });
 
-// 디버깅: Notion 클라이언트 확인
+// Debug: verify Notion client
 console.log('Notion client initialized:', {
   hasClient: !!notion,
   hasDatabases: !!notion.databases,
@@ -18,7 +19,7 @@ console.log('Notion client initialized:', {
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-// 볼드/이탤릭 + 코드 조합 시 HTML 태그로 출력 (마크다운 파서 호환성 문제 해결)
+// Output HTML tags for bold/italic + code combos (fixes markdown parser compatibility)
 n2m.annotatePlainText = (text: string, annotations: any) => {
   if (text.match(/^\s*$/)) return text;
 
@@ -28,7 +29,7 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
 
   if (!text) return leadingSpace + trailingSpace;
 
-  // 코드 + 볼드/이탤릭 조합: HTML 태그 사용
+  // Code + bold/italic combo: use HTML tags
   if (annotations.code && (annotations.bold || annotations.italic)) {
     let result = `<code>${text}</code>`;
     if (annotations.bold) result = `<strong>${result}</strong>`;
@@ -38,7 +39,7 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
     return leadingSpace + result + trailingSpace;
   }
 
-  // 일반 처리
+  // Default handling
   if (annotations.code) text = `\`${text}\``;
   if (annotations.bold) text = `<strong>${text}</strong>`;
   if (annotations.italic) text = `<em>${text}</em>`;
@@ -50,10 +51,10 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
 
 const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
-// 로컬 개발 환경에서는 Draft 글도 표시
+// Show draft posts in local dev environment
 const isDev = process.env.NODE_ENV === 'development';
 
-// Status 필터: 개발 환경에서는 Draft + Published, 프로덕션에서는 Published만
+// Status filter: Draft + Published in dev, Published only in production
 function getStatusFilter(): any {
   if (isDev) {
     return {
@@ -66,7 +67,7 @@ function getStatusFilter(): any {
   return { property: 'Status', select: { equals: 'Published' } };
 }
 
-// Notion 속성 값 추출 헬퍼 함수들
+// Notion property value extraction helpers
 function getTitle(property: any): string {
   if (!property || !property.title) return '';
   return property.title.map((t: any) => t.plain_text).join('');
@@ -75,7 +76,7 @@ function getTitle(property: any): string {
 function getRichText(property: any): string {
   if (!property || !property.rich_text) return '';
   return property.rich_text.map((t: any) => {
-    // Notion equation 블록은 $로 감싸서 LaTeX 렌더링 가능하게 함
+    // Wrap Notion equation blocks in $ for LaTeX rendering
     if (t.type === 'equation') return `$${t.plain_text}$`;
     return t.plain_text;
   }).join('');
@@ -111,7 +112,7 @@ function getFiles(property: any): string | undefined {
   return property.files[0].file?.url || property.files[0].external?.url;
 }
 
-// Notion 페이지를 Post 객체로 변환
+// Convert a Notion page to a Post object
 function notionPageToPost(page: any): Post {
   const props = page.properties;
 
@@ -131,7 +132,7 @@ function notionPageToPost(page: any): Post {
   };
 }
 
-// 모든 Published 글 가져오기
+// Fetch all published posts
 export async function getAllPosts(): Promise<Post[]> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,
@@ -150,14 +151,14 @@ export async function getAllPosts(): Promise<Post[]> {
 
   const posts = response.results.map(notionPageToPost);
 
-  // ReadTime 계산 추가
+  // Calculate read time
   return posts.map((post) => ({
     ...post,
     readTime: calculateReadTime(post.description),
   }));
 }
 
-// Slug로 특정 글 가져오기
+// Fetch a single post by slug
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,
@@ -180,7 +181,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
   const post = notionPageToPost(response.results[0]);
 
-  // 실제 본문 내용을 가져와서 정확한 읽기 시간 계산
+  // Fetch actual body content for accurate read time calculation
   const content = await getPostContent(post.id);
   const readTime = calculateReadTime(content);
 
@@ -190,7 +191,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   };
 }
 
-// 태그별 글 가져오기
+// Fetch posts by tag
 export async function getPostsByTag(tag: string): Promise<Post[]> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,
@@ -221,7 +222,7 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
   }));
 }
 
-// 시리즈별 글 가져오기
+// Fetch posts by series
 export async function getPostsBySeries(series: string): Promise<Post[]> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,
@@ -252,21 +253,21 @@ export async function getPostsBySeries(series: string): Promise<Post[]> {
   }));
 }
 
-// 모든 태그 가져오기
+// Fetch all tags
 export async function getAllTags(): Promise<string[]> {
   const posts = await getAllPosts();
   const tags = [...new Set(posts.map((post) => post.tag))];
   return tags.filter(Boolean);
 }
 
-// 모든 시리즈 가져오기
+// Fetch all series
 export async function getAllSeries(): Promise<string[]> {
   const posts = await getAllPosts();
   const series = [...new Set(posts.map((post) => post.series).filter(Boolean))];
   return series as string[];
 }
 
-// 글 본문 내용을 마크다운으로 가져오기
+// Fetch post body content as markdown
 export async function getPostContent(pageId: string): Promise<string> {
   try {
     const mdBlocks = await n2m.pageToMarkdown(pageId);
@@ -278,10 +279,10 @@ export async function getPostContent(pageId: string): Promise<string> {
   }
 }
 
-// 읽기 시간 계산 (한국어: 분당 500자 기준)
+// Calculate read time based on config.charsPerMinute
 export function calculateReadTime(text?: string): number {
   if (!text) return 1;
   const charCount = text.replace(/\s/g, '').length;
-  const readTime = Math.ceil(charCount / 500);
-  return Math.max(1, readTime); // 최소 1분
+  const readTime = Math.ceil(charCount / config.charsPerMinute);
+  return Math.max(1, readTime); // minimum 1 minute
 }

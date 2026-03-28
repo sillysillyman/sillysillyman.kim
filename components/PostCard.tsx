@@ -17,7 +17,7 @@ export default function PostCard({ post, index }: PostCardProps) {
   const tagInfo = getTagInfo(post.tag);
   const seriesInfo = post.series ? getSeriesInfo(post.series) : null;
 
-  // 썸네일 그라데이션 색상 (태그 기반)
+  // Thumbnail gradient colors (tag-based)
   const seeds = [
     ['#0F172A', '#1D4ED8', '#818CF8'],
     ['#1E1B4B', '#A78BFA', '#C4B5FD'],
@@ -30,7 +30,7 @@ export default function PostCard({ post, index }: PostCardProps) {
   ];
   const colors = seeds[parseInt(post.id) % seeds.length] || seeds[0];
 
-  // 날짜 포맷팅 (YYYY-MM-DD → YYYY.MM.DD)
+  // Format date (YYYY-MM-DD -> YYYY.MM.DD)
   const formattedDate = post.publishedAt ? post.publishedAt.replace(/-/g, '.') : '';
 
   return (
@@ -43,10 +43,10 @@ export default function PostCard({ post, index }: PostCardProps) {
           animation: `cardUp 0.4s ease ${index * 0.05}s both`,
         }}
       >
-        {/* 썸네일 */}
+        {/* Thumbnail */}
         <div className="relative overflow-hidden aspect-video">
           {post.thumbnail ? (
-            /* 노션 이미지 썸네일 */
+            /* Notion image thumbnail */
             <img
               src={post.thumbnail}
               alt={post.title}
@@ -54,7 +54,7 @@ export default function PostCard({ post, index }: PostCardProps) {
               style={{ transform: isHovered ? 'scale(1.03)' : 'scale(1)' }}
             />
           ) : (
-            /* 그라데이션 fallback */
+            /* Gradient fallback */
             <div
               className="w-full h-full transition-transform duration-500 ease-out"
               style={{
@@ -90,7 +90,7 @@ export default function PostCard({ post, index }: PostCardProps) {
             </div>
           )}
 
-          {/* 태그 & 핀 뱃지 */}
+          {/* Tag & pin badge */}
           <div className="absolute top-2.5 left-2.5 flex gap-1.5 items-center">
             {tagInfo && (
               <span
@@ -112,9 +112,9 @@ export default function PostCard({ post, index }: PostCardProps) {
           </div>
         </div>
 
-        {/* 카드 내용 */}
+        {/* Card content */}
         <div className="p-4 pb-[18px] flex flex-col h-[160px]">
-          {/* 시리즈 정보 */}
+          {/* Series info */}
           {seriesInfo && (
             <div
               className="inline-flex items-center gap-1 text-[10.5px] font-semibold mb-1.5"
@@ -125,17 +125,17 @@ export default function PostCard({ post, index }: PostCardProps) {
             </div>
           )}
 
-          {/* 제목 */}
+          {/* Title */}
           <h3 className="text-[15px] font-bold leading-snug text-zinc-900 dark:text-zinc-50 mb-1.5 line-clamp-2 tracking-tight">
             {post.title}
           </h3>
 
-          {/* 설명 */}
+          {/* Description */}
           <p className="text-[12.5px] leading-relaxed text-zinc-600 dark:text-zinc-400 mb-3.5 line-clamp-2">
             <InlineMath text={post.description} />
           </p>
 
-          {/* 메타 정보 */}
+          {/* Meta info */}
           <div className="flex items-center justify-between pt-2.5 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
             <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">{config.author.name}</span>
             <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 dark:text-zinc-600">
