@@ -116,6 +116,10 @@ NOTION_API_KEY=secret_xxx        # Notion Integration에서 발급
 NOTION_DATABASE_ID=xxx           # 위 URL에서 추출한 32자 ID
 SITE_URL=https://yourdomain.com  # 배포 도메인
 
+# 선택 — Upstash Redis 조회수 (미설정 시 조회수 숨김)
+UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
+UPSTASH_REDIS_REST_TOKEN=AXxxx
+
 # 선택 — Giscus 댓글 (미설정 시 댓글 비활성화)
 NEXT_PUBLIC_GISCUS_REPO=username/repo
 NEXT_PUBLIC_GISCUS_REPO_ID=R_xxx

@@ -10,9 +10,10 @@ import { config } from '@/lib/config';
 interface PostCardProps {
   post: Post;
   index: number;
+  viewCount?: number;
 }
 
-export default function PostCard({ post, index }: PostCardProps) {
+export default function PostCard({ post, index, viewCount }: PostCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const tagInfo = getTagInfo(post.tag);
   const seriesInfo = post.series ? getSeriesInfo(post.series) : null;
@@ -113,7 +114,7 @@ export default function PostCard({ post, index }: PostCardProps) {
         </div>
 
         {/* Card content */}
-        <div className="p-4 pb-[18px] flex flex-col h-[160px]">
+        <div className="p-4 pb-[18px] flex flex-col h-[175px]">
           {/* Series info */}
           {seriesInfo && (
             <div
@@ -136,11 +137,27 @@ export default function PostCard({ post, index }: PostCardProps) {
           </p>
 
           {/* Meta info */}
-          <div className="flex items-center justify-between pt-2.5 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
-            <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">{config.author.name}</span>
-            <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 dark:text-zinc-600">
-              <span>{formattedDate}</span>
-            </div>
+          <div className="pt-2.5 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
+            {viewCount != null ? (
+              <>
+                <div className="flex items-center justify-end gap-0.5 text-[11px] text-zinc-400 dark:text-zinc-600 mb-0.5">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  {viewCount.toLocaleString('ko-KR')}
+                </div>
+                <div className="flex items-end justify-between">
+                  <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">{config.author.name}</span>
+                  <span className="text-[11px] text-zinc-400 dark:text-zinc-600">{formattedDate}</span>
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center justify-between">
+                <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">{config.author.name}</span>
+                <span className="text-[11px] text-zinc-400 dark:text-zinc-600">{formattedDate}</span>
+              </div>
+            )}
           </div>
         </div>
       </article>

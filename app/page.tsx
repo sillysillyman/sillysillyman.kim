@@ -29,6 +29,7 @@ function HomeContent() {
   const [activeSeries, setActiveSeries] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
 
   // Initial data fetch
   useEffect(() => {
@@ -36,7 +37,17 @@ function HomeContent() {
       try {
         const response = await fetch('/api/posts');
         const data = await response.json();
-        setPosts(Array.isArray(data) ? data : []);
+        const fetchedPosts = Array.isArray(data) ? data : [];
+        setPosts(fetchedPosts);
+
+        // Fetch view counts for all posts in one request
+        if (fetchedPosts.length > 0) {
+          const slugs = fetchedPosts.map((p: Post) => p.slug).join(',');
+          fetch(`/api/views?slugs=${slugs}`)
+            .then((res) => res.json())
+            .then((counts) => setViewCounts(counts))
+            .catch(() => {});
+        }
       } catch (error) {
         console.error('Failed to fetch posts:', error);
       } finally {
@@ -210,7 +221,7 @@ function HomeContent() {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[18px]">
                 {visiblePosts.map((post, index) => (
-                  <PostCard key={post.id} post={post} index={index} />
+                  <PostCard key={post.id} post={post} index={index} viewCount={viewCounts[post.slug]} />
                 ))}
               </div>
 

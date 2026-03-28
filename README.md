@@ -118,6 +118,10 @@ NOTION_API_KEY=secret_xxx        # From Notion Integration
 NOTION_DATABASE_ID=xxx           # 32-char ID from the URL above
 SITE_URL=https://yourdomain.com  # Your deploy domain
 
+# Optional — Upstash Redis view counter (hidden if not set)
+UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
+UPSTASH_REDIS_REST_TOKEN=AXxxx
+
 # Optional — Giscus comments (disabled if not set)
 NEXT_PUBLIC_GISCUS_REPO=username/repo
 NEXT_PUBLIC_GISCUS_REPO_ID=R_xxx

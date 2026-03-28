@@ -11,6 +11,7 @@ import Footer from '@/components/Footer';
 import ThemeToggle from '@/components/ThemeToggle';
 import Giscus from '@/components/Giscus';
 import InlineMath from '@/components/InlineMath';
+import ViewCounter from '@/components/ViewCounter';
 
 export const revalidate = 60;
 
@@ -141,6 +142,7 @@ export default async function PostPage({ params }: PostPageProps) {
             <time dateTime={post.publishedAt}>{formattedDate}</time>
             <span className="opacity-30">·</span>
             <span>{post.readTime || 5}분 읽기</span>
+            <ViewCounter slug={post.slug} />
           </div>
         </div>
       </div>
