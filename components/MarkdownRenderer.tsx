@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useId } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
@@ -10,9 +10,11 @@ import remarkMath from 'remark-math';
 import mermaid from 'mermaid';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github-dark.css';
+import type { HeadingItem } from '@/lib/latex';
 
 interface MarkdownRendererProps {
   content: string;
+  headings?: HeadingItem[];
 }
 
 // React 노드에서 텍스트 추출 (복사 기능용)
@@ -125,7 +127,28 @@ function CodeBlock({ children, className }: { children: any; className?: string 
   );
 }
 
-export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
+// rehype 플러그인: 마크다운 AST 단계에서 헤딩에 미리 계산된 ID 부여
+// AST 순회는 서버/클라이언트 동일하므로 hydration 불일치 없음
+function rehypeHeadingIds(headingItems: HeadingItem[]) {
+  return () => (tree: any) => {
+    let idx = 0;
+    const visit = (node: any) => {
+      if (node.type === 'element' && ['h1', 'h2', 'h3'].includes(node.tagName)) {
+        if (idx < headingItems.length) {
+          node.properties = node.properties || {};
+          node.properties.id = headingItems[idx].id;
+          idx++;
+        }
+      }
+      if (node.children) {
+        node.children.forEach(visit);
+      }
+    };
+    visit(tree);
+  };
+}
+
+export default function MarkdownRenderer({ content, headings }: MarkdownRendererProps) {
   // HTML 엔티티 디코딩 (백틱 등)
   let processedContent = content
     .replace(/&#96;/g, '`')
@@ -144,7 +167,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeRaw, rehypeKatex, rehypeHighlight]}
+      rehypePlugins={[rehypeRaw, ...(headings ? [rehypeHeadingIds(headings)] : []), rehypeKatex, rehypeHighlight]}
       components={{
         // 코드 블록
         pre: ({ children }) => <>{children}</>,
@@ -233,51 +256,30 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           </td>
         ),
         // 제목
-        h1: ({ children, ...props }) => {
-          const id = extractText(children)
-            .replace(/\s+/g, '-')
-            .replace(/[^\w가-힣-]/g, '')
-            .toLowerCase();
-          return (
-            <h1
-              id={id}
-              className="text-3xl font-bold mt-12 mb-4 text-zinc-900 dark:text-zinc-50 scroll-mt-20"
-              {...props}
-            >
-              {children}
-            </h1>
-          );
-        },
-        h2: ({ children, ...props }) => {
-          const id = extractText(children)
-            .replace(/\s+/g, '-')
-            .replace(/[^\w가-힣-]/g, '')
-            .toLowerCase();
-          return (
-            <h2
-              id={id}
-              className="text-[22px] font-bold mt-12 mb-4 text-zinc-900 dark:text-zinc-50 scroll-mt-20"
-              {...props}
-            >
-              {children}
-            </h2>
-          );
-        },
-        h3: ({ children, ...props }) => {
-          const id = extractText(children)
-            .replace(/\s+/g, '-')
-            .replace(/[^\w가-힣-]/g, '')
-            .toLowerCase();
-          return (
-            <h3
-              id={id}
-              className="text-[17px] font-semibold mt-9 mb-3 text-zinc-900 dark:text-zinc-50 scroll-mt-20"
-              {...props}
-            >
-              {children}
-            </h3>
-          );
-        },
+        h1: ({ children, node, ...props }) => (
+          <h1
+            {...props}
+            className="text-3xl font-bold mt-12 mb-4 text-zinc-900 dark:text-zinc-50 scroll-mt-20"
+          >
+            {children}
+          </h1>
+        ),
+        h2: ({ children, node, ...props }) => (
+          <h2
+            {...props}
+            className="text-[22px] font-bold mt-12 mb-4 text-zinc-900 dark:text-zinc-50 scroll-mt-20"
+          >
+            {children}
+          </h2>
+        ),
+        h3: ({ children, node, ...props }) => (
+          <h3
+            {...props}
+            className="text-[17px] font-semibold mt-9 mb-3 text-zinc-900 dark:text-zinc-50 scroll-mt-20"
+          >
+            {children}
+          </h3>
+        ),
         // 리스트
         ul: ({ children, ...props }) => (
           <ul className="list-disc list-outside ml-5 my-4 space-y-2" {...props}>

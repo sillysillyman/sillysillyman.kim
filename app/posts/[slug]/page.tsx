@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, getPostContent } from '@/lib/notion';
 import { getTagInfo, getSeriesInfo } from '@/lib/constants';
+import { extractHeadings } from '@/lib/latex';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import TableOfContents from '@/components/TableOfContents';
 import Footer from '@/components/Footer';
@@ -16,44 +17,6 @@ interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// 마크다운에서 heading 추출
-function extractHeadings(content: string) {
-  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
-  const headings: { id: string; text: string; level: number }[] = [];
-  let match;
-
-  while ((match = headingRegex.exec(content)) !== null) {
-    const level = match[1].length;
-    // LaTeX 명령어를 읽기 좋은 텍스트로 변환
-    const cleanLatex = (s: string) =>
-      s.replace(/\\(log|ln|sin|cos|tan|sqrt|sum|prod|lim|max|min|gcd|lcm|mod|inf|sup)\b/g, '$1')
-        .replace(/\\(leq|geq|neq|approx|times|cdot|div)/g, (_, cmd) => {
-          const map: Record<string, string> = { leq: '≤', geq: '≥', neq: '≠', approx: '≈', times: '×', cdot: '·', div: '÷' };
-          return map[cmd] || cmd;
-        })
-        .replace(/[{}\\]/g, '');
-    const text = match[2]
-      .replace(/`([^`]+)`/g, '$1')        // 인라인 코드
-      .replace(/\$\$[^$]+\$\$/g, '')      // 블록 수식
-      .replace(/\$([^$]+)\$/g, (_, m) => cleanLatex(m))  // 인라인 수식
-      .replace(/\*\*([^*]+)\*\*/g, '$1')  // 볼드
-      .replace(/\*([^*]+)\*/g, '$1')      // 이탤릭
-      .trim();
-    const id = match[2]
-      .replace(/`([^`]+)`/g, '$1')
-      .replace(/\$\$[^$]+\$\$/g, '')
-      .replace(/\$([^$]+)\$/g, (_, m) => cleanLatex(m))
-      .replace(/\*\*([^*]+)\*\*/g, '$1')
-      .replace(/\*([^*]+)\*/g, '$1')
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w가-힣-]/g, '')
-      .toLowerCase();
-    headings.push({ id, text, level });
-  }
-
-  return headings;
-}
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -186,7 +149,7 @@ export default async function PostPage({ params }: PostPageProps) {
         {/* 본문 */}
         <main className="flex-1 min-w-0 max-w-[720px]">
           <article className="max-w-none">
-            <MarkdownRenderer content={content} />
+            <MarkdownRenderer content={content} headings={headings} />
           </article>
 
           {/* 댓글 */}
@@ -218,9 +181,9 @@ export default async function PostPage({ params }: PostPageProps) {
         </main>
 
         {/* TOC 사이드바 — 데스크톱에서만 표시 */}
-        {headings.length > 0 && (
+        {headings.filter(h => h.level >= 2).length > 0 && (
           <aside className="hidden lg:block w-[180px] shrink-0 sticky top-20">
-            <TableOfContents items={headings} />
+            <TableOfContents items={headings.filter(h => h.level >= 2)} />
           </aside>
         )}
       </div>
