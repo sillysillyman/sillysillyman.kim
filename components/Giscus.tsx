@@ -2,13 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
+import { config } from '@/lib/config';
 
 export default function Giscus() {
   const ref = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || !config.giscus.repo) return;
 
     // 기존 iframe 제거 (테마 변경 시 재렌더링)
     const existingIframe = ref.current.querySelector('iframe.giscus-frame');
@@ -16,10 +17,10 @@ export default function Giscus() {
 
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'sillysillyman/sillysillyman.kim');
-    script.setAttribute('data-repo-id', 'R_kgDORvnVJA');
-    script.setAttribute('data-category', 'Announcements');
-    script.setAttribute('data-category-id', 'DIC_kwDORvnVJM4C5QiD');
+    script.setAttribute('data-repo', config.giscus.repo);
+    script.setAttribute('data-repo-id', config.giscus.repoId);
+    script.setAttribute('data-category', config.giscus.category);
+    script.setAttribute('data-category-id', config.giscus.categoryId);
     script.setAttribute('data-mapping', 'pathname');
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');

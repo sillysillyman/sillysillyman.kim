@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/notion';
+import { config } from '@/lib/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.SITE_URL || 'https://sillysillyman.kim';
+  const siteUrl = config.url;
 
   // 모든 포스트 가져오기
   const posts = await getAllPosts();

@@ -2,6 +2,7 @@
 
 import { TAG_MAP, SERIES_MAP } from '@/lib/constants';
 import { Post } from '@/lib/types';
+import { config } from '@/lib/config';
 
 interface SidebarProps {
   posts: Post[];
@@ -93,31 +94,25 @@ export default function Sidebar({
           </span>
           <div>
             <div className="text-[13px] font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-              sillysillyman
+              {config.author.name}
             </div>
-            <div className="text-[11px] text-zinc-500 dark:text-zinc-600">Backend Developer</div>
+            <div className="text-[11px] text-zinc-500 dark:text-zinc-600">{config.author.title}</div>
           </div>
         </div>
         <p className="text-[11.5px] leading-relaxed text-zinc-600 dark:text-zinc-400 mb-0">
-          Kotlin/Spring Boot, Node.js, AWS 기반 백엔드 개발을 하고 있습니다.
+          {config.author.bio}
         </p>
         <div className="flex gap-2 mt-3">
-          <a
-            href="https://github.com/sillysillyman"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold px-2.5 py-1 rounded-md bg-blue-700/10 hover:bg-blue-700/20 transition-colors"
-          >
-            GitHub
-          </a>
-          {/* <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold px-2.5 py-1 rounded-md bg-blue-700/10 hover:bg-blue-700/20 transition-colors"
-          >
-            LinkedIn
-          </a> */}
+          {config.author.github && (
+            <a
+              href={config.author.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-blue-700 dark:text-blue-400 font-semibold px-2.5 py-1 rounded-md bg-blue-700/10 hover:bg-blue-700/20 transition-colors"
+            >
+              GitHub
+            </a>
+          )}
         </div>
       </div>
 

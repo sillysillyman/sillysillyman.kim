@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Post } from '@/lib/types';
 import { getTagInfo, getSeriesInfo } from '@/lib/constants';
 import InlineMath from '@/components/InlineMath';
+import { config } from '@/lib/config';
 
 interface PostCardProps {
   post: Post;
@@ -136,7 +137,7 @@ export default function PostCard({ post, index }: PostCardProps) {
 
           {/* 메타 정보 */}
           <div className="flex items-center justify-between pt-2.5 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
-            <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">sillysillyman</span>
+            <span className="text-[11.5px] text-zinc-400 dark:text-zinc-600">{config.author.name}</span>
             <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 dark:text-zinc-600">
               <span>{formattedDate}</span>
             </div>

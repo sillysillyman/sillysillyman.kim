@@ -3,41 +3,32 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { config } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: {
-    default: 'sillysillyman.kim',
-    template: '%s | sillysillyman.kim',
+    default: config.name,
+    template: `%s | ${config.name}`,
   },
-  description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
-  keywords: [
-    '개발 블로그',
-    'Backend',
-    'Spring Boot',
-    'Node.js',
-    'AWS',
-    'Kotlin',
-    'TypeScript',
-    '트러블슈팅',
-    '인프라',
-  ],
-  authors: [{ name: 'sillysillyman' }],
-  creator: 'sillysillyman',
+  description: config.description,
+  keywords: config.keywords,
+  authors: [{ name: config.author.name }],
+  creator: config.author.name,
   openGraph: {
     type: 'website',
-    locale: 'ko_KR',
-    url: 'https://sillysillyman.kim',
-    siteName: 'sillysillyman.kim',
-    title: 'sillysillyman.kim',
-    description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
+    locale: config.locale,
+    url: config.url,
+    siteName: config.name,
+    title: config.name,
+    description: config.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'sillysillyman.kim',
-    description: 'Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.',
+    title: config.name,
+    description: config.description,
   },
   verification: {
-    google: 'mui2IqJrOIG56hgmu2TzMXJsuf7J7ASfMVs-mjivtYk',
+    google: config.verification.google || undefined,
   },
   robots: {
     index: true,

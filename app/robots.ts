@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { config } from '@/lib/config';
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.SITE_URL || 'https://sillysillyman.kim';
+  const siteUrl = config.url;
 
   return {
     rules: [

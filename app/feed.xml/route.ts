@@ -1,18 +1,19 @@
 import { NextResponse } from 'next/server';
 import { getAllPosts } from '@/lib/notion';
+import { config } from '@/lib/config';
 
 export const revalidate = 3600; // 1시간마다 갱신
 
 export async function GET() {
-  const siteUrl = process.env.SITE_URL || 'https://sillysillyman.kim';
+  const siteUrl = config.url;
   const posts = await getAllPosts();
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>sillysillyman.kim</title>
+    <title>${config.name}</title>
     <link>${siteUrl}</link>
-    <description>Backend · Infra · Algorithm — 문제를 정의하고, 해결하고, 기록합니다.</description>
+    <description>${config.description}</description>
     <language>ko</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>

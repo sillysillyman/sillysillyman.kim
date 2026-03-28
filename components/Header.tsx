@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { config } from '@/lib/config';
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -45,7 +46,7 @@ export default function Header({ onSearch, searchQuery }: HeaderProps) {
             &lt;/&gt;
           </span>
           <span className="text-[15px] font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
-            sillysillyman
+            {config.author.name}
           </span>
         </div>
 

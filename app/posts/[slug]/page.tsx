@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, getPostContent } from '@/lib/notion';
 import { getTagInfo, getSeriesInfo } from '@/lib/constants';
+import { config } from '@/lib/config';
 import { extractHeadings } from '@/lib/latex';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import TableOfContents from '@/components/TableOfContents';
@@ -35,23 +36,23 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     };
   }
 
-  const siteUrl = process.env.SITE_URL || 'https://sillysillyman.kim';
+  const siteUrl = config.url;
   const postUrl = `${siteUrl}/posts/${post.slug}`;
 
   return {
-    title: `${post.title} | sillysillyman.kim`,
+    title: `${post.title} | ${config.name}`,
     description: post.description,
-    authors: [{ name: 'sillysillyman' }],
+    authors: [{ name: config.author.name }],
     keywords: [post.tag, 'blog', 'development', '개발', '블로그'],
     openGraph: {
       title: post.title,
       description: post.description,
       url: postUrl,
-      siteName: 'sillysillyman.kim',
-      locale: 'ko_KR',
+      siteName: config.name,
+      locale: config.locale,
       type: 'article',
       publishedTime: post.publishedAt,
-      authors: ['sillysillyman'],
+      authors: [config.author.name],
       tags: [post.tag],
     },
     twitter: {
@@ -97,7 +98,7 @@ export default async function PostPage({ params }: PostPageProps) {
               &lt;/&gt;
             </span>
             <span className="text-[15px] font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
-              sillysillyman
+              {config.author.name}
             </span>
           </Link>
           <ThemeToggle />
@@ -135,7 +136,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
           {/* 메타 정보 */}
           <div className="flex items-center gap-2 flex-wrap text-[13px] text-zinc-400 dark:text-zinc-600 pb-6 border-b border-zinc-200 dark:border-zinc-800">
-            <span className="text-zinc-500 dark:text-zinc-400 font-medium">sillysillyman</span>
+            <span className="text-zinc-500 dark:text-zinc-400 font-medium">{config.author.name}</span>
             <span className="opacity-30">·</span>
             <time dateTime={post.publishedAt}>{formattedDate}</time>
             <span className="opacity-30">·</span>
