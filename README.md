@@ -114,7 +114,7 @@ https://www.notion.so/<DATABASE_ID>?v=<VIEW_ID>
 
 ```env
 # Required
-NOTION_API_KEY=secret_xxx        # From Notion Integration
+NOTION_API_KEY=ntn_xxx           # From Notion Integration
 NOTION_DATABASE_ID=xxx           # 32-char ID from the URL above
 SITE_URL=https://yourdomain.com  # Your deploy domain
 

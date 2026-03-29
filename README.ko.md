@@ -112,7 +112,7 @@ https://www.notion.so/<DATABASE_ID>?v=<VIEW_ID>
 
 ```env
 # 필수
-NOTION_API_KEY=secret_xxx        # Notion Integration에서 발급
+NOTION_API_KEY=ntn_xxx           # Notion Integration에서 발급
 NOTION_DATABASE_ID=xxx           # 위 URL에서 추출한 32자 ID
 SITE_URL=https://yourdomain.com  # 배포 도메인
 
