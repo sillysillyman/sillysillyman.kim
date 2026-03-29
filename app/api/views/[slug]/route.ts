@@ -49,10 +49,12 @@ export async function POST(
     return NextResponse.json({ views: null });
   }
 
-  const referer = request.headers.get('referer');
-  const siteUrl = process.env.SITE_URL;
-  if (siteUrl && referer && !referer.startsWith(siteUrl)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  if (process.env.NODE_ENV === 'production') {
+    const referer = request.headers.get('referer');
+    const siteUrl = process.env.SITE_URL;
+    if (siteUrl && referer && !referer.startsWith(siteUrl)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
   }
 
   const ip = getIP(request);
