@@ -18,15 +18,19 @@ export default function ViewCounter({ slug }: ViewCounterProps) {
       // Already viewed in this session — just fetch the count
       fetch(`/api/views/${slug}`)
         .then((res) => res.json())
-        .then((data) => setViews(data.views))
+        .then((data) => {
+          if (typeof data.views === 'number') setViews(data.views);
+        })
         .catch(() => {});
     } else {
       // First visit in this session — increment
       fetch(`/api/views/${slug}`, { method: 'POST' })
         .then((res) => res.json())
         .then((data) => {
-          setViews(data.views);
-          sessionStorage.setItem(key, '1');
+          if (typeof data.views === 'number') {
+            setViews(data.views);
+            sessionStorage.setItem(key, '1');
+          }
         })
         .catch(() => {});
     }
