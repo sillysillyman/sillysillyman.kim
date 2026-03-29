@@ -100,6 +100,7 @@ export function extractHeadings(content: string): HeadingItem[] {
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
     const text = match[2]
+      .replace(/<[^>]+>/g, '')
       .replace(/`([^`]+)`/g, '$1')
       .replace(/\$\$[^$]+\$\$/g, '')
       .replace(/\$([^$]+)\$/g, (_, m) => cleanLatex(m))
@@ -107,6 +108,7 @@ export function extractHeadings(content: string): HeadingItem[] {
       .replace(/\*([^*]+)\*/g, '$1')
       .trim();
     const id = match[2]
+      .replace(/<[^>]+>/g, '')
       .replace(/`([^`]+)`/g, '$1')
       .replace(/\$\$[^$]+\$\$/g, '')
       .replace(/\$([^$]+)\$/g, (_, m) => cleanLatex(m))
