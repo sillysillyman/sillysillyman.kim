@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/notion';
 import { config } from '@/lib/config';
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = config.url;
 
