@@ -267,10 +267,47 @@ export async function getAllSeries(): Promise<string[]> {
   return series as string[];
 }
 
+// Tailwind grid classes by column count.
+// Classes must be referenced statically somewhere in app/ or components/ for purge —
+// these match the existing grid in app/page.tsx.
+const COLUMN_GRID_CLASSES: Record<number, string> = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4',
+};
+
+// Notion column_list/column blocks are flattened into sequential markdown by notion-to-md,
+// losing the side-by-side layout. Walk the MdBlock tree and replace each column_list with a
+// raw HTML grid wrapper (rehype-raw renders the HTML, with markdown processed inside the divs).
+function transformColumnLists(blocks: any[]): void {
+  for (const block of blocks) {
+    if (block.children?.length) {
+      transformColumnLists(block.children);
+    }
+
+    if (block.type === 'column_list' && block.children?.length) {
+      const columns = block.children;
+      const gridClass = COLUMN_GRID_CLASSES[columns.length] || 'grid-cols-1';
+
+      const columnHtmls = columns.map((column: any) => {
+        const inner = (n2m.toMarkdownString(column.children || []).parent || '').trim();
+        return `<div>\n\n${inner}\n\n</div>`;
+      });
+
+      block.type = 'paragraph';
+      // Inside columns, force images to fill the column (override the standalone-img cap)
+      // and drop their default vertical margin so the grid gap is the only spacing.
+      block.parent = `<div class="my-6 grid gap-4 ${gridClass} [&_img]:w-full [&_img]:max-w-full [&_img]:my-0">\n\n${columnHtmls.join('\n\n')}\n\n</div>`;
+      block.children = [];
+    }
+  }
+}
+
 // Fetch post body content as markdown
 export async function getPostContent(pageId: string): Promise<string> {
   try {
     const mdBlocks = await n2m.pageToMarkdown(pageId);
+    transformColumnLists(mdBlocks);
     const mdString = n2m.toMarkdownString(mdBlocks);
     return mdString.parent || '';
   } catch (error) {

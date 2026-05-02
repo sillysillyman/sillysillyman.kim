@@ -213,7 +213,7 @@ export default function MarkdownRenderer({ content, headings }: MarkdownRenderer
           <img
             src={src}
             alt={alt || ''}
-            className="rounded-xl border border-zinc-200 dark:border-zinc-800 my-6 w-full"
+            className="rounded-xl border border-zinc-200 dark:border-zinc-800 my-6 w-full h-auto block"
             {...props}
           />
         ),
