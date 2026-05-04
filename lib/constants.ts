@@ -11,8 +11,8 @@ export const TAG_MAP: Record<string, TagInfo> = {
   retrospective: {
     id: 'retrospective',
     label: '회고',
-    emoji: '📝',
-    color: { from: '#8b5cf6', to: '#7c3aed' },
+    emoji: '⌛',
+    color: { from: '#64748b', to: '#475569' },
   },
   development: {
     id: 'development',
