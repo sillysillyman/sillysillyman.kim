@@ -37,6 +37,8 @@
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 @keyframes dotPulse {
