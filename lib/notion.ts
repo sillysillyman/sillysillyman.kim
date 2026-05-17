@@ -19,6 +19,16 @@ console.log('Notion client initialized:', {
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
+// Map Notion color annotation to a CSS class defined in globals.css.
+// Returns null for "default" or missing values so we skip the wrapper.
+function getNotionColorClass(color?: string): string | null {
+  if (!color || color === 'default' || color === 'default_background') return null;
+  if (color.endsWith('_background')) {
+    return `notion-bg-${color.replace('_background', '')}`;
+  }
+  return `notion-color-${color}`;
+}
+
 // Output HTML tags for bold/italic + code combos (fixes markdown parser compatibility)
 n2m.annotatePlainText = (text: string, annotations: any) => {
   if (text.match(/^\s*$/)) return text;
@@ -29,6 +39,8 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
 
   if (!text) return leadingSpace + trailingSpace;
 
+  const colorClass = getNotionColorClass(annotations.color);
+
   // Code + bold/italic combo: use HTML tags
   if (annotations.code && (annotations.bold || annotations.italic)) {
     let result = `<code>${text}</code>`;
@@ -36,6 +48,7 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
     if (annotations.italic) result = `<em>${result}</em>`;
     if (annotations.strikethrough) result = `<del>${result}</del>`;
     if (annotations.underline) result = `<u>${result}</u>`;
+    if (colorClass) result = `<span class="${colorClass}">${result}</span>`;
     return leadingSpace + result + trailingSpace;
   }
 
@@ -45,6 +58,7 @@ n2m.annotatePlainText = (text: string, annotations: any) => {
   if (annotations.italic) text = `<em>${text}</em>`;
   if (annotations.strikethrough) text = `~~${text}~~`;
   if (annotations.underline) text = `<u>${text}</u>`;
+  if (colorClass) text = `<span class="${colorClass}">${text}</span>`;
 
   return leadingSpace + text + trailingSpace;
 };
