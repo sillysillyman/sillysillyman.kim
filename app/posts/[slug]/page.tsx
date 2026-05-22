@@ -55,11 +55,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       publishedTime: post.publishedAt,
       authors: [config.author.name],
       tags: [post.tag],
+      ...(post.thumbnail ? { images: [{ url: post.thumbnail }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
+      ...(post.thumbnail ? { images: [post.thumbnail] } : {}),
     },
     alternates: {
       canonical: post.canonicalUrl || postUrl,
