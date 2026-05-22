@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
 import { Post } from '@/lib/types';
 import { getTagInfo, getSeriesInfo } from '@/lib/constants';
@@ -14,7 +11,6 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, index, viewCount }: PostCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
   const tagInfo = getTagInfo(post.tag);
   const seriesInfo = post.series ? getSeriesInfo(post.series) : null;
 
@@ -37,9 +33,7 @@ export default function PostCard({ post, index, viewCount }: PostCardProps) {
   return (
     <Link href={`/posts/${post.slug}`}>
       <article
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="rounded-2xl overflow-hidden cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 ease-out hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/30"
+        className="group rounded-2xl overflow-hidden cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 ease-out hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/30"
         style={{
           animation: `cardUp 0.4s ease ${index * 0.05}s both`,
         }}
@@ -51,15 +45,13 @@ export default function PostCard({ post, index, viewCount }: PostCardProps) {
             <img
               src={post.thumbnail}
               alt={post.title}
-              className="w-full h-full object-cover transition-transform duration-500 ease-out"
-              style={{ transform: isHovered ? 'scale(1.03)' : 'scale(1)' }}
+              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
           ) : (
             /* Gradient fallback */
             <div
-              className="w-full h-full transition-transform duration-500 ease-out"
+              className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               style={{
-                transform: isHovered ? 'scale(1.03)' : 'scale(1)',
                 background: `linear-gradient(145deg, ${colors[0]} 0%, ${colors[0]}dd 60%, ${colors[1]}22 100%)`,
               }}
             >

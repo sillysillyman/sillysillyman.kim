@@ -89,8 +89,40 @@ export default async function PostPage({ params }: PostPageProps) {
       })
     : '';
 
+  const postUrl = `${config.url}/posts/${post.slug}`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    url: postUrl,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: config.author.name,
+      url: config.author.github,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: config.author.name,
+      url: config.url,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+    inLanguage: config.language,
+    keywords: post.tag,
+    ...(post.thumbnail ? { image: post.thumbnail } : {}),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-950/95 border-b border-zinc-200 dark:border-zinc-800 backdrop-blur-xl">
         <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">

@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { config } from '@/lib/config';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(config.url),
   title: {
     default: config.name,
     template: `%s | ${config.name}`,
@@ -14,6 +15,12 @@ export const metadata: Metadata = {
   keywords: config.keywords,
   authors: [{ name: config.author.name }],
   creator: config.author.name,
+  alternates: {
+    canonical: '/',
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
+  },
   openGraph: {
     type: 'website',
     locale: config.locale,
